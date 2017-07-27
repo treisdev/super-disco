@@ -1,14 +1,31 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar (input)="filtraProposicoes($event)" debounce=500></ion-searchbar>
+  </ion-toolbar>
+    <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="tipoBusca">
+      <ion-segment-button value="assuntos">
+        Assuntos
+      </ion-segment-button>
+      <ion-segment-button value="descricao">
+        Descricao
+      </ion-segment-button>
+      <ion-segment-button value="outro">
+        Outro Param
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content overflow-scroll=’true’>
+  <ion-list [virtualScroll]="proposicoes" approxItemHeight="80px" inset>
+    <ion-card *virtualItem="let proposicao">
+      <ion-card-header>
+        {{proposicao.descricao}}
+      </ion-card-header>
+      <ion-card-content>
+        Alguma coisa aqui
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>
