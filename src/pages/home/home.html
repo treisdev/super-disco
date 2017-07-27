@@ -2,8 +2,8 @@
   <ion-toolbar color="primary">
     <ion-searchbar (input)="filtraProposicoes($event)" debounce=500></ion-searchbar>
   </ion-toolbar>
-    <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="tipoBusca">
+  <ion-toolbar no-border-top color="primary">
+    <ion-segment [(ngModel)]="tipoBusca" color="light">
       <ion-segment-button value="assuntos">
         Assuntos
       </ion-segment-button>
