@@ -1,5 +1,6 @@
 # Pra rodar
 ```bash
+$ sudo npm install -g ionic cordova
 $ npm i
 $ ionic serve
 ```
