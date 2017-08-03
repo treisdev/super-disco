@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import { DetailPage } from '../detail/detail';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -35,5 +37,9 @@ export class HomePage {
         prop => prop.descricao.indexOf(query) > -1,
       );
     }
+  }
+
+  public vaiPlaneta(proposicao) {
+    this.navCtrl.push(DetailPage, proposicao);
   }
 }

@@ -18,14 +18,10 @@
 </ion-header>
 
 <ion-content overflow-scroll=’true’>
-  <ion-list [virtualScroll]="proposicoes" approxItemHeight="80px" inset>
-    <ion-card *virtualItem="let proposicao">
-      <ion-card-header>
-        {{proposicao.descricao}}
-      </ion-card-header>
-      <ion-card-content>
-        Alguma coisa aqui
-      </ion-card-content>
-    </ion-card>
+  <ion-list [virtualScroll]="proposicoes" approxItemHeight="80px">
+    <button ion-item *virtualItem="let proposicao" (click)="vaiPlaneta(proposicao)">
+      <h2>{{proposicao.descricao}}</h2>
+      <p>Leizinha marota sobre meio ambiente</p>
+    </button>
   </ion-list>
 </ion-content>
