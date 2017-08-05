@@ -1,27 +1,45 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-searchbar (input)="filtraProposicoes($event)" debounce=500></ion-searchbar>
-  </ion-toolbar>
-  <ion-toolbar no-border-top color="primary">
-    <ion-segment [(ngModel)]="tipoBusca" color="light">
-      <ion-segment-button value="assuntos">
-        Assuntos
-      </ion-segment-button>
-      <ion-segment-button value="descricao">
-        Descricao
-      </ion-segment-button>
-      <ion-segment-button value="outro">
-        Outro Param
-      </ion-segment-button>
-    </ion-segment>
+    <ion-searchbar (click)="abreBuscaTags()" (input)="busca($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content overflow-scroll=’true’>
-  <ion-list [virtualScroll]="proposicoes" approxItemHeight="80px">
-    <button ion-item *virtualItem="let proposicao" (click)="vaiPlaneta(proposicao)">
-      <h2>{{proposicao.descricao}}</h2>
-      <p>Leizinha marota sobre meio ambiente</p>
+  <ion-list *ngIf="buscaTags" no-lines>
+    <ion-list-header>Buscar por temas:</ion-list-header>
+    <ion-item text-wrap>
+      <ion-badge color="secondary" (click)="onClickTag('meioambiente')">Meio-Ambiente</ion-badge>
+      <ion-badge color="danger" (click)="onClickTag('urgente')">Urgente</ion-badge>
+      <ion-badge color="dark" (click)="onClickTag('got')">Game of Thrones</ion-badge>
+      <ion-badge color="primary" (click)="onClickTag('urgente')">Mulheres</ion-badge>
+      <ion-badge color="light" (click)="onClickTag('meioambiente')">Meio-Ambiente</ion-badge>
+      <ion-badge color="danger" (click)="onClickTag('urgente')">Outro</ion-badge>
+      <ion-badge color="secondary" (click)="onClickTag('meioambiente')">Full-Ambiente</ion-badge>
+      <ion-badge color="primary" (click)="onClickTag('urgente')">De Boas</ion-badge>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="proposicoes.length > 9" [virtualScroll]="proposicoes" approxItemHeight="65px">
+    <button ion-item *virtualItem="let proposicao" (click)="onClickProposicao(proposicao)">
+      <ion-avatar item-start>
+        <ion-img [src]="proposicao.tipoImg"></ion-img>
+      </ion-avatar>
+      <h2>{{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}</h2>
+      <p>
+        <ion-badge *ngFor="let tag of proposicao.tags" style="margin: 1px" color="{{tag.color}}">{{tag.descricao}}</ion-badge>
+      </p>
     </button>
   </ion-list>
+  <ion-list *ngIf="proposicoes.length > 0 && proposicoes.length <= 9">
+    <button ion-item test-wrap *ngFor="let proposicao of proposicoes" (click)="onClickProposicao(proposicao)">
+      <ion-avatar item-start>
+        <img [src]="proposicao.tipoImg" />
+      </ion-avatar>
+      <h2>{{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}</h2>
+      <p text-wrap>
+        <ion-badge *ngFor="let tag of proposicao.tags" style="margin: 1px" color="{{tag.color}}">{{tag.descricao}}</ion-badge>
+      </p>
+    </button>
+  </ion-list>
+  <ion-item *ngIf="proposicoes.length == 0">Não há proposições</ion-item>
 </ion-content>

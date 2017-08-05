@@ -10,22 +10,131 @@ import { DetailPage } from '../detail/detail';
 export class HomePage {
   proposicoes: Array<any> = [];
   tipoBusca: string = 'assuntos';
+  buscaTags: boolean = false;
+  proposicoesPadrao: Array<any> = [
+    {
+      siglaTipo: 'PL',
+      tipoImg: 'assets/img/pl.png',
+      numero: 2431,
+      ano: 2011,
+      tags: [
+        { descricao: 'Meio Ambiente', color: 'secondary' },
+        { descricao: 'Trabalho Escravo', color: 'danger' },
+        { descricao: 'Mulheres', color: 'primary' },
+        { descricao: 'Violencia Domestica', color: 'danger' },
+        { descricao: 'Direito Financeiro', color: 'light' },
+        { descricao: 'Tributos', color: 'secondary' },
+        { descricao: 'Game of Thrones', color: 'dark' },
+        { descricao: 'Senado', color: 'light' },
+      ],
+    },
+    {
+      siglaTipo: 'PL',
+      tipoImg: 'assets/img/pec.png',
+      numero: 2432,
+      ano: 2011,
+      tags: [
+        { descricao: 'Mulheres', color: 'primary' },
+        { descricao: 'Violencia Domestica', color: 'danger' },
+      ],
+    },
+    {
+      siglaTipo: 'PL',
+      tipoImg: 'assets/img/plp.png',
+      numero: 2433,
+      ano: 2011,
+      tags: [
+        { descricao: 'Direito Financeiro', color: 'light' },
+        { descricao: 'Tributos', color: 'secondary' },
+      ],
+    },
+    {
+      siglaTipo: 'PL',
+      tipoImg: 'assets/img/pl.png',
+      numero: 2431,
+      ano: 2011,
+      tags: [
+        { descricao: 'Meio Ambiente', color: 'secondary' },
+        { descricao: 'Trabalho Escravo', color: 'danger' },
+        { descricao: 'Mulheres', color: 'primary' },
+        { descricao: 'Violencia Domestica', color: 'danger' },
+        { descricao: 'Direito Financeiro', color: 'light' },
+        { descricao: 'Tributos', color: 'secondary' },
+        { descricao: 'Game of Thrones', color: 'dark' },
+        { descricao: 'Senado', color: 'light' },
+      ],
+    },
+    {
+      siglaTipo: 'PL',
+      tipoImg: 'assets/img/pec.png',
+      numero: 2432,
+      ano: 2011,
+      tags: [
+        { descricao: 'Mulheres', color: 'primary' },
+        { descricao: 'Violencia Domestica', color: 'danger' },
+      ],
+    },
+    {
+      siglaTipo: 'PL',
+      tipoImg: 'assets/img/plp.png',
+      numero: 2433,
+      ano: 2011,
+      tags: [
+        { descricao: 'Direito Financeiro', color: 'light' },
+        { descricao: 'Tributos', color: 'secondary' },
+      ],
+    },
+    {
+      siglaTipo: 'PL',
+      tipoImg: 'assets/img/pl.png',
+      numero: 2431,
+      ano: 2011,
+      tags: [
+        { descricao: 'Meio Ambiente', color: 'secondary' },
+        { descricao: 'Trabalho Escravo', color: 'danger' },
+        { descricao: 'Mulheres', color: 'primary' },
+        { descricao: 'Violencia Domestica', color: 'danger' },
+        { descricao: 'Direito Financeiro', color: 'light' },
+        { descricao: 'Tributos', color: 'secondary' },
+        { descricao: 'Game of Thrones', color: 'dark' },
+        { descricao: 'Senado', color: 'light' },
+      ],
+    },
+    {
+      siglaTipo: 'PL',
+      tipoImg: 'assets/img/pec.png',
+      numero: 2432,
+      ano: 2011,
+      tags: [
+        { descricao: 'Mulheres', color: 'primary' },
+        { descricao: 'Violencia Domestica', color: 'danger' },
+      ],
+    },
+    {
+      siglaTipo: 'PL',
+      tipoImg: 'assets/img/plp.png',
+      numero: 2433,
+      ano: 2011,
+      tags: [
+        { descricao: 'Direito Financeiro', color: 'light' },
+        { descricao: 'Tributos', color: 'secondary' },
+      ],
+    },
+  ];
 
   constructor(public navCtrl: NavController) {
-    this.proposicoes = [
-      { descricao: 'PL 8.666/93' },
-      { descricao: 'PL 1.666/83' },
-      { descricao: 'PL 3.666/93' },
-    ];
+    this.proposicoes = this.proposicoesPadrao;
   }
 
-  public filtraProposicoes(ev) {
+  ionViewDidLoad() {
+    console.log(
+      'ionViewDidLoad HomePage, aqui vamos carregar a lista de proposicoes...',
+    );
+  }
+
+  public busca(ev) {
     // Reset items back to all of the items
-    this.proposicoes = [
-      { descricao: 'PL 8.666/93' },
-      { descricao: 'PL 1.666/83' },
-      { descricao: 'PL 3.666/93' },
-    ];
+    this.proposicoes = this.proposicoesPadrao;
 
     // set val to the value of the ev target
     var val = ev.target.value;
@@ -34,12 +143,24 @@ export class HomePage {
     if (val && val.trim() != '') {
       const query = val.toLowerCase();
       this.proposicoes = this.proposicoes.filter(
-        prop => prop.descricao.indexOf(query) > -1,
+        proposicao =>
+          proposicao.numero.toString().indexOf(query) > -1 ||
+          proposicao.ano.toString().indexOf(query) > -1 ||
+          proposicao.siglaTipo.toLowerCase().indexOf(query) > -1,
       );
     }
   }
 
-  public vaiPlaneta(proposicao) {
-    this.navCtrl.push(DetailPage, proposicao);
+  public abreBuscaTags() {
+    this.buscaTags = true;
+  }
+
+  public onClickProposicao(proposicao) {
+    this.navCtrl.push(DetailPage, { proposicao });
+  }
+
+  onClickTag(tag) {
+    console.log(tag);
+    this.buscaTags = false;
   }
 }

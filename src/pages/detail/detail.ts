@@ -13,12 +13,13 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'detail.html',
 })
 export class DetailPage {
+  proposicao: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.proposicao = navParams.get('proposicao');
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DetailPage');
+    console.log('ionViewDidLoad DetailPage, aqui vamos carregar os detalhes da proposicao');
   }
-
 }
