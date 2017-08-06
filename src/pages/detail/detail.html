@@ -19,5 +19,20 @@
 
 
 <ion-content padding>
-  <h2>{{proposicao.siglaTipo}} {{proposicao.numero}} / {{proposicao.ano}}</h2>
+  <ion-card>
+    <ion-card-header>
+      {{proposicao.siglaTipo}} {{proposicao.numero}} / {{proposicao.ano}}
+    </ion-card-header>
+    <ion-card-content>
+      <h2>{{proposicao.ementa}}</h2>
+      <ion-list-header>Palavras-chave:</ion-list-header>
+      <p text-wrap>
+        <ion-badge *ngFor="let tag of proposicao.tags" style="margin: 1px">{{tag}}</ion-badge>
+      </p>
+    </ion-card-content>
+  </ion-card>
+  <ion-list-header>
+    Objeto completo:
+  </ion-list-header>
+  <p>{{proposicao | json}}</p>
 </ion-content>
