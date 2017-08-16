@@ -8,14 +8,8 @@
   <ion-list *ngIf="buscaTags" no-lines>
     <ion-list-header>Buscar por temas:</ion-list-header>
     <ion-item text-wrap>
-      <ion-badge color="light" (click)="onClickTag('meioambiente')">Meio-Ambiente</ion-badge>
-      <ion-badge color="light" (click)="onClickTag('urgente')">Urgente</ion-badge>
-      <ion-badge color="light" (click)="onClickTag('got')">Game of Thrones</ion-badge>
-      <ion-badge color="light" (click)="onClickTag('urgente')">Mulheres</ion-badge>
-      <ion-badge color="light" (click)="onClickTag('meioambiente')">Meio-Ambiente</ion-badge>
-      <ion-badge color="light" (click)="onClickTag('urgente')">Outro</ion-badge>
-      <ion-badge color="light" (click)="onClickTag('meioambiente')">Full-Ambiente</ion-badge>
-      <ion-badge color="light" (click)="onClickTag('urgente')">De Boas</ion-badge>
+      <ion-badge *ngFor="let tag of tags" color="light" (click)="onClickTag(tag.id)">{{tag.descricao}}</ion-badge>
+      <ion-badge color="light" (click)="limparFiltroTags()">Todos</ion-badge>
     </ion-item>
   </ion-list>
 

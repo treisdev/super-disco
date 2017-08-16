@@ -2,6 +2,16 @@ import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
 
 import { DetailPage } from "../detail/detail";
+import {
+  proposicoes as proposicoesPadrao,
+  tags as availableTags
+} from "../../resources/proposicoes";
+
+const filtrarTags = (tags: Array<{ id }>, filtros: Array<string>): boolean => {
+  console.log(filtros);
+  if (filtros.length < 1 || !tags) return true;
+  return tags.some(tag => filtros.indexOf(tag.id) > -1);
+};
 
 @Component({
   selector: "page-home",
@@ -9,103 +19,14 @@ import { DetailPage } from "../detail/detail";
 })
 export class HomePage {
   proposicoes: Array<any> = [];
+  filtro: string = "";
+  filtroTags: Array<string> = [];
   tipoBusca: string = "assuntos";
   buscaTags: boolean = false;
-  proposicoesPadrao: Array<any> = [
-    {
-      siglaTipo: "PL",
-      tipoImg: "assets/img/pl.png",
-      numero: 2431,
-      ano: 2011,
-      tags: [
-        { descricao: "Meio Ambiente" },
-        { descricao: "Trabalho Escravo" },
-        { descricao: "Mulheres" },
-        { descricao: "Violencia Domestica" },
-        { descricao: "Direito Financeiro" },
-        { descricao: "Tributos" },
-        { descricao: "Game of Thrones" },
-        { descricao: "Senado" }
-      ]
-    },
-    {
-      siglaTipo: "PL",
-      tipoImg: "assets/img/pec.png",
-      numero: 2432,
-      ano: 2011,
-      tags: [{ descricao: "Mulheres" }, { descricao: "Violencia Domestica" }]
-    },
-    {
-      siglaTipo: "PL",
-      tipoImg: "assets/img/plp.png",
-      numero: 2433,
-      ano: 2011,
-      tags: [{ descricao: "Direito Financeiro" }, { descricao: "Tributos" }]
-    },
-    {
-      siglaTipo: "PL",
-      tipoImg: "assets/img/pl.png",
-      numero: 2431,
-      ano: 2011,
-      tags: [
-        { descricao: "Meio Ambiente" },
-        { descricao: "Trabalho Escravo" },
-        { descricao: "Mulheres" },
-        { descricao: "Violencia Domestica" },
-        { descricao: "Direito Financeiro" },
-        { descricao: "Tributos" },
-        { descricao: "Game of Thrones" },
-        { descricao: "Senado" }
-      ]
-    },
-    {
-      siglaTipo: "PL",
-      tipoImg: "assets/img/pec.png",
-      numero: 2432,
-      ano: 2011,
-      tags: [{ descricao: "Mulheres" }, { descricao: "Violencia Domestica" }]
-    },
-    {
-      siglaTipo: "PL",
-      tipoImg: "assets/img/plp.png",
-      numero: 2433,
-      ano: 2011,
-      tags: [{ descricao: "Direito Financeiro" }, { descricao: "Tributos" }]
-    },
-    {
-      siglaTipo: "PL",
-      tipoImg: "assets/img/pl.png",
-      numero: 2431,
-      ano: 2011,
-      tags: [
-        { descricao: "Meio Ambiente" },
-        { descricao: "Trabalho Escravo" },
-        { descricao: "Mulheres" },
-        { descricao: "Violencia Domestica" },
-        { descricao: "Direito Financeiro" },
-        { descricao: "Tributos" },
-        { descricao: "Game of Thrones" },
-        { descricao: "Senado" }
-      ]
-    },
-    {
-      siglaTipo: "PL",
-      tipoImg: "assets/img/pec.png",
-      numero: 2432,
-      ano: 2011,
-      tags: [{ descricao: "Mulheres" }, { descricao: "Violencia Domestica" }]
-    },
-    {
-      siglaTipo: "PL",
-      tipoImg: "assets/img/plp.png",
-      numero: 2433,
-      ano: 2011,
-      tags: [{ descricao: "Direito Financeiro" }, { descricao: "Tributos" }]
-    }
-  ];
+  tags = Object.values(availableTags);
 
   constructor(public navCtrl: NavController) {
-    this.proposicoes = this.proposicoesPadrao;
+    this.proposicoes = proposicoesPadrao;
   }
 
   ionViewDidLoad() {
@@ -115,22 +36,18 @@ export class HomePage {
   }
 
   public busca(ev) {
-    // Reset items back to all of the items
-    this.proposicoes = this.proposicoesPadrao;
+    this.filtro = ev.target.value && ev.target.value.trim().toLowerCase();
+    this.filtrar();
+  }
 
-    // set val to the value of the ev target
-    var val = ev.target.value;
-
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != "") {
-      const query = val.toLowerCase();
-      this.proposicoes = this.proposicoes.filter(
-        proposicao =>
-          proposicao.numero.toString().indexOf(query) > -1 ||
-          proposicao.ano.toString().indexOf(query) > -1 ||
-          proposicao.siglaTipo.toLowerCase().indexOf(query) > -1
-      );
-    }
+  public filtrar() {
+    this.proposicoes = proposicoesPadrao.filter(
+      proposicao =>
+        `${proposicao.siglaTipo} ${proposicao.numero}/${proposicao.ano}`
+          .toLowerCase()
+          .indexOf(this.filtro) > -1 &&
+        filtrarTags(proposicao.tags, this.filtroTags)
+    );
   }
 
   public abreBuscaTags() {
@@ -142,7 +59,14 @@ export class HomePage {
   }
 
   onClickTag(tag) {
-    console.log(tag);
+    this.filtroTags = [tag];
+    this.filtrar();
+    this.buscaTags = false;
+  }
+
+  limparFiltroTags() {
+    this.filtroTags = [];
+    this.filtrar();
     this.buscaTags = false;
   }
 }
