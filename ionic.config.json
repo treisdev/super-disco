@@ -1,5 +1,6 @@
 {
   "name": "desafioleg",
   "app_id": "faca58e1",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {}
 }

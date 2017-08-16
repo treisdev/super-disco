@@ -1,125 +1,107 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { NavController } from "ionic-angular";
 
-import { DetailPage } from '../detail/detail';
+import { DetailPage } from "../detail/detail";
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
+  selector: "page-home",
+  templateUrl: "home.html"
 })
 export class HomePage {
   proposicoes: Array<any> = [];
-  tipoBusca: string = 'assuntos';
+  tipoBusca: string = "assuntos";
   buscaTags: boolean = false;
   proposicoesPadrao: Array<any> = [
     {
-      siglaTipo: 'PL',
-      tipoImg: 'assets/img/pl.png',
+      siglaTipo: "PL",
+      tipoImg: "assets/img/pl.png",
       numero: 2431,
       ano: 2011,
       tags: [
-        { descricao: 'Meio Ambiente', color: 'secondary' },
-        { descricao: 'Trabalho Escravo', color: 'danger' },
-        { descricao: 'Mulheres', color: 'primary' },
-        { descricao: 'Violencia Domestica', color: 'danger' },
-        { descricao: 'Direito Financeiro', color: 'light' },
-        { descricao: 'Tributos', color: 'secondary' },
-        { descricao: 'Game of Thrones', color: 'dark' },
-        { descricao: 'Senado', color: 'light' },
-      ],
+        { descricao: "Meio Ambiente" },
+        { descricao: "Trabalho Escravo" },
+        { descricao: "Mulheres" },
+        { descricao: "Violencia Domestica" },
+        { descricao: "Direito Financeiro" },
+        { descricao: "Tributos" },
+        { descricao: "Game of Thrones" },
+        { descricao: "Senado" }
+      ]
     },
     {
-      siglaTipo: 'PL',
-      tipoImg: 'assets/img/pec.png',
+      siglaTipo: "PL",
+      tipoImg: "assets/img/pec.png",
       numero: 2432,
       ano: 2011,
-      tags: [
-        { descricao: 'Mulheres', color: 'primary' },
-        { descricao: 'Violencia Domestica', color: 'danger' },
-      ],
+      tags: [{ descricao: "Mulheres" }, { descricao: "Violencia Domestica" }]
     },
     {
-      siglaTipo: 'PL',
-      tipoImg: 'assets/img/plp.png',
+      siglaTipo: "PL",
+      tipoImg: "assets/img/plp.png",
       numero: 2433,
       ano: 2011,
-      tags: [
-        { descricao: 'Direito Financeiro', color: 'light' },
-        { descricao: 'Tributos', color: 'secondary' },
-      ],
+      tags: [{ descricao: "Direito Financeiro" }, { descricao: "Tributos" }]
     },
     {
-      siglaTipo: 'PL',
-      tipoImg: 'assets/img/pl.png',
+      siglaTipo: "PL",
+      tipoImg: "assets/img/pl.png",
       numero: 2431,
       ano: 2011,
       tags: [
-        { descricao: 'Meio Ambiente', color: 'secondary' },
-        { descricao: 'Trabalho Escravo', color: 'danger' },
-        { descricao: 'Mulheres', color: 'primary' },
-        { descricao: 'Violencia Domestica', color: 'danger' },
-        { descricao: 'Direito Financeiro', color: 'light' },
-        { descricao: 'Tributos', color: 'secondary' },
-        { descricao: 'Game of Thrones', color: 'dark' },
-        { descricao: 'Senado', color: 'light' },
-      ],
+        { descricao: "Meio Ambiente" },
+        { descricao: "Trabalho Escravo" },
+        { descricao: "Mulheres" },
+        { descricao: "Violencia Domestica" },
+        { descricao: "Direito Financeiro" },
+        { descricao: "Tributos" },
+        { descricao: "Game of Thrones" },
+        { descricao: "Senado" }
+      ]
     },
     {
-      siglaTipo: 'PL',
-      tipoImg: 'assets/img/pec.png',
+      siglaTipo: "PL",
+      tipoImg: "assets/img/pec.png",
       numero: 2432,
       ano: 2011,
-      tags: [
-        { descricao: 'Mulheres', color: 'primary' },
-        { descricao: 'Violencia Domestica', color: 'danger' },
-      ],
+      tags: [{ descricao: "Mulheres" }, { descricao: "Violencia Domestica" }]
     },
     {
-      siglaTipo: 'PL',
-      tipoImg: 'assets/img/plp.png',
+      siglaTipo: "PL",
+      tipoImg: "assets/img/plp.png",
       numero: 2433,
       ano: 2011,
-      tags: [
-        { descricao: 'Direito Financeiro', color: 'light' },
-        { descricao: 'Tributos', color: 'secondary' },
-      ],
+      tags: [{ descricao: "Direito Financeiro" }, { descricao: "Tributos" }]
     },
     {
-      siglaTipo: 'PL',
-      tipoImg: 'assets/img/pl.png',
+      siglaTipo: "PL",
+      tipoImg: "assets/img/pl.png",
       numero: 2431,
       ano: 2011,
       tags: [
-        { descricao: 'Meio Ambiente', color: 'secondary' },
-        { descricao: 'Trabalho Escravo', color: 'danger' },
-        { descricao: 'Mulheres', color: 'primary' },
-        { descricao: 'Violencia Domestica', color: 'danger' },
-        { descricao: 'Direito Financeiro', color: 'light' },
-        { descricao: 'Tributos', color: 'secondary' },
-        { descricao: 'Game of Thrones', color: 'dark' },
-        { descricao: 'Senado', color: 'light' },
-      ],
+        { descricao: "Meio Ambiente" },
+        { descricao: "Trabalho Escravo" },
+        { descricao: "Mulheres" },
+        { descricao: "Violencia Domestica" },
+        { descricao: "Direito Financeiro" },
+        { descricao: "Tributos" },
+        { descricao: "Game of Thrones" },
+        { descricao: "Senado" }
+      ]
     },
     {
-      siglaTipo: 'PL',
-      tipoImg: 'assets/img/pec.png',
+      siglaTipo: "PL",
+      tipoImg: "assets/img/pec.png",
       numero: 2432,
       ano: 2011,
-      tags: [
-        { descricao: 'Mulheres', color: 'primary' },
-        { descricao: 'Violencia Domestica', color: 'danger' },
-      ],
+      tags: [{ descricao: "Mulheres" }, { descricao: "Violencia Domestica" }]
     },
     {
-      siglaTipo: 'PL',
-      tipoImg: 'assets/img/plp.png',
+      siglaTipo: "PL",
+      tipoImg: "assets/img/plp.png",
       numero: 2433,
       ano: 2011,
-      tags: [
-        { descricao: 'Direito Financeiro', color: 'light' },
-        { descricao: 'Tributos', color: 'secondary' },
-      ],
-    },
+      tags: [{ descricao: "Direito Financeiro" }, { descricao: "Tributos" }]
+    }
   ];
 
   constructor(public navCtrl: NavController) {
@@ -128,7 +110,7 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log(
-      'ionViewDidLoad HomePage, aqui vamos carregar a lista de proposicoes...',
+      "ionViewDidLoad HomePage, aqui vamos carregar a lista de proposicoes..."
     );
   }
 
@@ -140,13 +122,13 @@ export class HomePage {
     var val = ev.target.value;
 
     // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
+    if (val && val.trim() != "") {
       const query = val.toLowerCase();
       this.proposicoes = this.proposicoes.filter(
         proposicao =>
           proposicao.numero.toString().indexOf(query) > -1 ||
           proposicao.ano.toString().indexOf(query) > -1 ||
-          proposicao.siglaTipo.toLowerCase().indexOf(query) > -1,
+          proposicao.siglaTipo.toLowerCase().indexOf(query) > -1
       );
     }
   }

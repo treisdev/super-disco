@@ -8,14 +8,14 @@
   <ion-list *ngIf="buscaTags" no-lines>
     <ion-list-header>Buscar por temas:</ion-list-header>
     <ion-item text-wrap>
-      <ion-badge color="secondary" (click)="onClickTag('meioambiente')">Meio-Ambiente</ion-badge>
-      <ion-badge color="danger" (click)="onClickTag('urgente')">Urgente</ion-badge>
-      <ion-badge color="dark" (click)="onClickTag('got')">Game of Thrones</ion-badge>
-      <ion-badge color="primary" (click)="onClickTag('urgente')">Mulheres</ion-badge>
       <ion-badge color="light" (click)="onClickTag('meioambiente')">Meio-Ambiente</ion-badge>
-      <ion-badge color="danger" (click)="onClickTag('urgente')">Outro</ion-badge>
-      <ion-badge color="secondary" (click)="onClickTag('meioambiente')">Full-Ambiente</ion-badge>
-      <ion-badge color="primary" (click)="onClickTag('urgente')">De Boas</ion-badge>
+      <ion-badge color="light" (click)="onClickTag('urgente')">Urgente</ion-badge>
+      <ion-badge color="light" (click)="onClickTag('got')">Game of Thrones</ion-badge>
+      <ion-badge color="light" (click)="onClickTag('urgente')">Mulheres</ion-badge>
+      <ion-badge color="light" (click)="onClickTag('meioambiente')">Meio-Ambiente</ion-badge>
+      <ion-badge color="light" (click)="onClickTag('urgente')">Outro</ion-badge>
+      <ion-badge color="light" (click)="onClickTag('meioambiente')">Full-Ambiente</ion-badge>
+      <ion-badge color="light" (click)="onClickTag('urgente')">De Boas</ion-badge>
     </ion-item>
   </ion-list>
 
@@ -26,7 +26,7 @@
       </ion-avatar>
       <h2>{{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}</h2>
       <p>
-        <ion-badge *ngFor="let tag of proposicao.tags" style="margin: 1px" color="{{tag.color}}">{{tag.descricao}}</ion-badge>
+        <ion-badge *ngFor="let tag of proposicao.tags" style="margin: 1px" color="light">{{tag.descricao}}</ion-badge>
       </p>
     </button>
   </ion-list>
@@ -37,7 +37,7 @@
       </ion-avatar>
       <h2>{{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}</h2>
       <p text-wrap>
-        <ion-badge *ngFor="let tag of proposicao.tags" style="margin: 1px" color="{{tag.color}}">{{tag.descricao}}</ion-badge>
+        <ion-badge *ngFor="let tag of proposicao.tags" style="margin: 1px" color="light">{{tag.descricao}}</ion-badge>
       </p>
     </button>
   </ion-list>
