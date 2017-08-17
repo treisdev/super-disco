@@ -5,9 +5,9 @@ import { DetailPage } from "../detail/detail";
 const aprovometro = require("../../resources/aprovometro.json");
 const temas = require("../../resources/temas.json");
 
-const filtrarTemas = (temas: Array<string>, filtros: Array<string>): boolean => {
+const filtrarTemas = (temas: Array<{tema}>, filtros: Array<string>): boolean => {
   if (filtros.length < 1 || !temas) return true;
-  return temas.some(tema => filtros.indexOf(tema) > -1);
+  return temas.some(tema => filtros.indexOf(tema.tema) > -1);
 };
 
 @Component({
@@ -18,8 +18,8 @@ export class HomePage {
   proposicoes: Array<any> = [];
   filtro: string = "";
   filtroTemas: Array<string> = [];
-  tipoBusca: string = "assuntos";
   buscaTemas: boolean = false;
+  buscaTexto: boolean = false;
   temas: Array<string> = [];
 
   constructor(public navCtrl: NavController) {
@@ -48,8 +48,11 @@ export class HomePage {
     );
   }
 
-  public abreBuscaTemas() {
-    this.buscaTemas = true;
+  public toggleBuscaTemas() {
+    this.buscaTemas = !this.buscaTemas;
+  }
+  public toggleBuscaTexto() {
+    this.buscaTexto = !this.buscaTexto;
   }
 
   public onClickProposicao(proposicao) {

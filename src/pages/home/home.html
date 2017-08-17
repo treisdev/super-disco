@@ -1,10 +1,30 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-searchbar (click)="abreBuscaTemas()" (input)="busca($event)"></ion-searchbar>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="toggleBuscaTemas()">
+        <ion-icon name="pricetag"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-segment [(ngModel)]="order">
+      <ion-segment-button value="chance">
+        Chance
+      </ion-segment-button>
+      <ion-segment-button value="velocidade">
+        Velocidade
+      </ion-segment-button>
+    </ion-segment>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="toggleBuscaTexto()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content overflow-scroll=’true’>
+  <ion-toolbar color="primary" [hidden]="!buscaTexto">
+    <ion-searchbar (ionInput)="busca($event)"></ion-searchbar>
+  </ion-toolbar>
   <ion-list *ngIf="buscaTemas" no-lines>
     <ion-list-header>Buscar por temas:</ion-list-header>
     <ion-item text-wrap>
