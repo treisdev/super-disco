@@ -16,18 +16,19 @@ import { ApiProvider } from '../../providers/api/api';
 })
 export class DetailPage {
   proposicao: any = {};
+  proposicaoQuery: any = {};
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public api: ApiProvider,
   ) {
-    this.proposicao = navParams.get('proposicao');
+    this.proposicaoQuery = navParams.get('proposicao');
   }
 
   ionViewDidLoad() {
     this.api
-      .searchProposicao(this.proposicao)
+      .searchProposicao(this.proposicaoQuery)
       .map(res => res.json())
       .subscribe(resultadoBusca => {
         const { dados } = resultadoBusca;
@@ -37,7 +38,7 @@ export class DetailPage {
             .map(res => res.json())
             .subscribe(resp => {
               this.proposicao = resp.dados;
-              this.proposicao.tags = this.proposicao.keywords.split(',');
+              this.proposicao.keywords = this.proposicao.keywords.split(',');
             });
         }
       });

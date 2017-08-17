@@ -2,15 +2,12 @@ import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
 
 import { DetailPage } from "../detail/detail";
-import {
-  proposicoes as proposicoesPadrao,
-  tags as availableTags
-} from "../../resources/proposicoes";
+const aprovometro = require("../../resources/aprovometro.json");
+const temas = require("../../resources/temas.json");
 
-const filtrarTags = (tags: Array<{ id }>, filtros: Array<string>): boolean => {
-  console.log(filtros);
-  if (filtros.length < 1 || !tags) return true;
-  return tags.some(tag => filtros.indexOf(tag.id) > -1);
+const filtrarTemas = (temas: Array<string>, filtros: Array<string>): boolean => {
+  if (filtros.length < 1 || !temas) return true;
+  return temas.some(tema => filtros.indexOf(tema) > -1);
 };
 
 @Component({
@@ -20,13 +17,14 @@ const filtrarTags = (tags: Array<{ id }>, filtros: Array<string>): boolean => {
 export class HomePage {
   proposicoes: Array<any> = [];
   filtro: string = "";
-  filtroTags: Array<string> = [];
+  filtroTemas: Array<string> = [];
   tipoBusca: string = "assuntos";
-  buscaTags: boolean = false;
-  tags = Object.values(availableTags);
+  buscaTemas: boolean = false;
+  temas: Array<string> = [];
 
   constructor(public navCtrl: NavController) {
-    this.proposicoes = proposicoesPadrao;
+    this.proposicoes = aprovometro;
+    this.temas = temas;
   }
 
   ionViewDidLoad() {
@@ -41,32 +39,32 @@ export class HomePage {
   }
 
   public filtrar() {
-    this.proposicoes = proposicoesPadrao.filter(
+    this.proposicoes = aprovometro.filter(
       proposicao =>
         `${proposicao.siglaTipo} ${proposicao.numero}/${proposicao.ano}`
           .toLowerCase()
           .indexOf(this.filtro) > -1 &&
-        filtrarTags(proposicao.tags, this.filtroTags)
+        filtrarTemas(proposicao.temas, this.filtroTemas)
     );
   }
 
-  public abreBuscaTags() {
-    this.buscaTags = true;
+  public abreBuscaTemas() {
+    this.buscaTemas = true;
   }
 
   public onClickProposicao(proposicao) {
     this.navCtrl.push(DetailPage, { proposicao });
   }
 
-  onClickTag(tag) {
-    this.filtroTags = [tag];
+  onClickTema(tema) {
+    this.filtroTemas = [tema];
     this.filtrar();
-    this.buscaTags = false;
+    this.buscaTemas = false;
   }
 
-  limparFiltroTags() {
-    this.filtroTags = [];
+  limparFiltroTemas() {
+    this.filtroTemas = [];
     this.filtrar();
-    this.buscaTags = false;
+    this.buscaTemas = false;
   }
 }

@@ -1,37 +1,26 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-searchbar (click)="abreBuscaTags()" (input)="busca($event)"></ion-searchbar>
+    <ion-searchbar (click)="abreBuscaTemas()" (input)="busca($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content overflow-scroll=’true’>
-  <ion-list *ngIf="buscaTags" no-lines>
+  <ion-list *ngIf="buscaTemas" no-lines>
     <ion-list-header>Buscar por temas:</ion-list-header>
     <ion-item text-wrap>
-      <ion-badge *ngFor="let tag of tags" color="light" (click)="onClickTag(tag.id)">{{tag.descricao}}</ion-badge>
-      <ion-badge color="light" (click)="limparFiltroTags()">Todos</ion-badge>
+      <ion-badge color="light" (click)="limparFiltroTemas()">Todos</ion-badge>
+      <ion-badge *ngFor="let tema of temas" color="light" (click)="onClickTema(tema)">{{tema}}</ion-badge>
     </ion-item>
   </ion-list>
 
-  <ion-list *ngIf="proposicoes.length > 9" [virtualScroll]="proposicoes" approxItemHeight="65px">
+  <ion-list *ngIf="proposicoes.length > 0" [virtualScroll]="proposicoes" approxItemHeight="65px">
     <button ion-item *virtualItem="let proposicao" (click)="onClickProposicao(proposicao)">
       <ion-avatar item-start>
         <ion-img [src]="proposicao.tipoImg"></ion-img>
       </ion-avatar>
       <h2>{{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}</h2>
       <p>
-        <ion-badge *ngFor="let tag of proposicao.tags" style="margin: 1px" color="light">{{tag.descricao}}</ion-badge>
-      </p>
-    </button>
-  </ion-list>
-  <ion-list *ngIf="proposicoes.length > 0 && proposicoes.length <= 9">
-    <button ion-item test-wrap *ngFor="let proposicao of proposicoes" (click)="onClickProposicao(proposicao)">
-      <ion-avatar item-start>
-        <img [src]="proposicao.tipoImg" />
-      </ion-avatar>
-      <h2>{{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}</h2>
-      <p text-wrap>
-        <ion-badge *ngFor="let tag of proposicao.tags" style="margin: 1px" color="light">{{tag.descricao}}</ion-badge>
+        <ion-badge *ngFor="let tema of proposicao.temas" style="margin: 1px" color="light">{{tema.tema}}</ion-badge>
       </p>
     </button>
   </ion-list>

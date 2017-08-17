@@ -11,7 +11,7 @@
       <button ion-button icon-only navPop>
       </button>
     </ion-buttons>
-    <ion-title>{{proposicao.siglaTipo}} {{proposicao.numero}} / {{proposicao.ano}}</ion-title>
+    <ion-title>{{proposicaoQuery.siglaTipo}} {{proposicaoQuery.numero}} / {{proposicaoQuery.ano}}</ion-title>
 
   </ion-navbar>
 
@@ -25,14 +25,35 @@
     </ion-card-header>
     <ion-card-content>
       <h2>{{proposicao.ementa}}</h2>
+      <ion-item>
+        Chance: {{proposicaoQuery.chance*100}}%
+      </ion-item>
+      <ion-item text-wrap>
+        Velocidade: {{proposicaoQuery.velocidade}} tramitacoes/mes
+      </ion-item>
+      <ion-item>
+        Tramitacoes: {{proposicaoQuery.qtd_tramitacoes}}
+      </ion-item>
+      <ion-list-header>Temas:</ion-list-header>
+      <p text-wrap>
+        <ion-badge *ngFor="let tema of proposicaoQuery.temas" style="margin: 1px" color="light">{{tema.tema}}</ion-badge>
+      </p>
+      <ion-list-header>Comissoes:</ion-list-header>
+      <p text-wrap>
+        <ion-badge *ngFor="let comissao of proposicaoQuery.comissoes" style="margin: 1px" color="light">{{comissao.comissao}}</ion-badge>
+      </p>
       <ion-list-header>Palavras-chave:</ion-list-header>
       <p text-wrap>
-        <ion-badge *ngFor="let tag of proposicao.tags" style="margin: 1px">{{tag}}</ion-badge>
+        <ion-badge *ngFor="let keyword of proposicao.keywords" style="margin: 1px" color="light">{{keyword}}</ion-badge>
       </p>
     </ion-card-content>
   </ion-card>
   <ion-list-header>
-    Objeto completo:
+    Proposicao Query:
+  </ion-list-header>
+  <p>{{proposicaoQuery | json}}</p>
+  <ion-list-header>
+    Proposicao encontrada:
   </ion-list-header>
   <p>{{proposicao | json}}</p>
 </ion-content>
