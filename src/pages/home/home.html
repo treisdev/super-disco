@@ -16,7 +16,7 @@
   <ion-list *ngIf="proposicoes.length > 0" [virtualScroll]="proposicoes" approxItemHeight="65px">
     <button ion-item *virtualItem="let proposicao" (click)="onClickProposicao(proposicao)">
       <ion-avatar item-start>
-        <ion-img [src]="proposicao.tipoImg"></ion-img>
+        <img [src]="proposicao.tipoImg">
       </ion-avatar>
       <h2>{{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}</h2>
       <p>
