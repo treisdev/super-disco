@@ -5,7 +5,7 @@ import { DetailPage } from "../detail/detail";
 const aprovometro = require("../../resources/aprovometro.json");
 const temas = require("../../resources/temas.json");
 
-const filtrarTemas = (temas: Array<{tema}>, filtros: Array<string>): boolean => {
+const filtrarTemas = (temas: Array<{ tema }>, filtros: Array<string>): boolean => {
   if (filtros.length < 1 || !temas) return true;
   return temas.some(tema => filtros.indexOf(tema.tema) > -1);
 };
@@ -21,31 +21,52 @@ export class HomePage {
   buscaTemas: boolean = false;
   buscaTexto: boolean = false;
   temas: Array<string> = [];
+  order: string = "chance";
 
   constructor(public navCtrl: NavController) {
     this.proposicoes = aprovometro;
     this.temas = temas;
   }
 
-  ionViewDidLoad() {
-    console.log(
-      "ionViewDidLoad HomePage, aqui vamos carregar a lista de proposicoes..."
-    );
+  public busca(ev) {
+    let val = ev.target.value;
+    if (!val || val.trim() == '') {
+      this.onClickSearch();
+    }
   }
 
-  public busca(ev) {
-    this.filtro = ev.target.value && ev.target.value.trim().toLowerCase();
-    this.filtrar();
+  onClickSearch() {
+    console.log("onClickSearch");
+    this.proposicoes = aprovometro;
+    // set val to the value of the searchbar
+    let val = this.filtro;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.filtrar();
+    }
+    this.proposicoes.sort((a, b) => {
+      const aProp = a && a[this.order];
+      const bProp = b && b[this.order];
+      return aProp < bProp ? 1 : aProp > bProp ? -1 : 0;
+    });
+    console.log("onClickSearch ended");
   }
 
   public filtrar() {
-    this.proposicoes = aprovometro.filter(
+    const proposicoesFiltradas = aprovometro.filter(
       proposicao =>
         `${proposicao.siglaTipo} ${proposicao.numero}/${proposicao.ano}`
           .toLowerCase()
           .indexOf(this.filtro) > -1 &&
         filtrarTemas(proposicao.temas, this.filtroTemas)
     );
+    this.proposicoes = proposicoesFiltradas;
+    this.proposicoes.sort((a, b) => {
+      const aProp = a && a[this.order];
+      const bProp = b && b[this.order];
+      return aProp < bProp ? 1 : aProp > bProp ? -1 : 0;
+    });
   }
 
   public toggleBuscaTemas() {
