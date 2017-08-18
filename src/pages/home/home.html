@@ -38,6 +38,7 @@
     </ion-item>
   </ion-list>
 
+  <ion-item><span style="font-size: 0.85em;">Total de registros: {{proposicoes.length}}</span></ion-item>
   <ion-list *ngIf="proposicoes.length > 0" [virtualScroll]="proposicoes" approxItemHeight="65px">
     <button ion-item *virtualItem="let proposicao" (click)="onClickProposicao(proposicao)">
       <ion-avatar item-start>
