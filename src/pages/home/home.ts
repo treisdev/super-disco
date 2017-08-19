@@ -5,7 +5,10 @@ import { DetailPage } from "../detail/detail";
 const aprovometro = require("../../resources/aprovometro.json");
 const temas = require("../../resources/temas.json");
 
-const filtrarTemas = (temas: Array<{ tema }>, filtros: Array<string>): boolean => {
+const filtrarTemas = (
+  temas: Array<{ tema }>,
+  filtros: Array<string>
+): boolean => {
   if (filtros.length < 1 || !temas) return true;
   return temas.some(tema => filtros.indexOf(tema.tema) > -1);
 };
@@ -22,15 +25,20 @@ export class HomePage {
   buscaTexto: boolean = false;
   temas: Array<string> = [];
   order: string = "chance";
+  Math: any;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController) {
+  constructor(
+    public navCtrl: NavController,
+    public loadingCtrl: LoadingController
+  ) {
+    this.Math = Math;
     this.proposicoes = aprovometro;
     this.temas = temas;
   }
 
   public busca(ev) {
     let val = ev.target.value;
-    if (!val || val.trim() == '') {
+    if (!val || val.trim() == "") {
       this.onClickSearch();
     }
   }
@@ -41,7 +49,7 @@ export class HomePage {
     let val = this.filtro;
 
     // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
+    if (val && val.trim() != "") {
       this.filtrar();
     }
     this.ordernar();
@@ -49,7 +57,7 @@ export class HomePage {
 
   public filtrar() {
     let loading = this.loadingCtrl.create({
-      content: 'Filtrando...'
+      content: "Filtrando..."
     });
     loading.present();
     const proposicoesFiltradas = aprovometro.filter(
@@ -65,10 +73,12 @@ export class HomePage {
 
   public ordernar() {
     let loading = this.loadingCtrl.create({
-      content: 'Ordenando...'
+      content: "Ordenando..."
     });
     loading.present();
-    const proposicoesTemp = this.proposicoes.filter(proposicao => filtrarTemas(proposicao.temas, this.filtroTemas));
+    const proposicoesTemp = this.proposicoes.filter(proposicao =>
+      filtrarTemas(proposicao.temas, this.filtroTemas)
+    );
     proposicoesTemp.sort((a, b) => {
       const aProp = a && a[this.order];
       const bProp = b && b[this.order];
@@ -99,5 +109,19 @@ export class HomePage {
     this.filtroTemas = [];
     this.filtrar();
     this.buscaTemas = false;
+  }
+
+  colorTagBasedOnData(value, max, inverse = false) {
+    const percentage = value / max;
+    const colors = inverse
+      ? ["red", "medium", "green"]
+      : ["green", "medium", "red"];
+    if (percentage < 0.25) {
+      return colors[0];
+    } else if (percentage < 0.75) {
+      return colors[1];
+    } else {
+      return colors[2];
+    }
   }
 }

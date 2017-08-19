@@ -44,7 +44,17 @@
       <ion-avatar item-start>
         <img [src]="proposicao.tipoImg">
       </ion-avatar>
-      <h2>{{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}} - {{proposicao.chance*100}}% - {{proposicao.velocidade}}</h2>
+      <h2>{{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}</h2>
+      <p>
+        <ion-badge style="margin: 1px" color="{{colorTagBasedOnData(proposicao.chance, 1, true)}}">
+          Chance de aprovação: {{this.Math.round(proposicao.chance*100)}}%
+        </ion-badge>
+      </p>
+      <p>
+        <ion-badge style="margin: 1px" color="{{colorTagBasedOnData(proposicao.velocidade, 50)}}">
+          Velocidade de tramitação: {{proposicao.velocidade}}
+        </ion-badge>
+      </p>
       <p>
         <ion-badge *ngFor="let tema of proposicao.temas" style="margin: 1px" color="light">{{tema.tema}}</ion-badge>
       </p>
