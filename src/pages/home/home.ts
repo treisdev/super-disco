@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { NavController, LoadingController } from "ionic-angular";
 
 import { DetailPage } from "../detail/detail";
@@ -29,7 +30,8 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    private sanitizer: DomSanitizer
   ) {
     this.Math = Math;
     this.proposicoes = aprovometro;
@@ -111,17 +113,31 @@ export class HomePage {
     this.buscaTemas = false;
   }
 
-  colorTagBasedOnData(value, max, inverse = false) {
-    const percentage = value / max;
-    const colors = inverse
-      ? ["red", "medium", "green"]
-      : ["green", "medium", "red"];
-    if (percentage < 0.25) {
+  colorByPercentage(value): string {
+    const green400 = "#66BB6A";
+    const amber400 = "#FFCA28";
+    const red500 = "#F44336";
+    const colors = [red500, amber400, green400];
+    if (value < 0.25) {
       return colors[0];
-    } else if (percentage < 0.75) {
+    } else if (value < 0.75) {
       return colors[1];
     } else {
       return colors[2];
+    }
+  }
+
+  widthStyleByPercentage(value: number): SafeStyle {
+    return this.sanitizer.bypassSecurityTrustStyle(`width: ${value * 100}%; background-color: ${this.colorByPercentage(value)}!important`);
+  }
+
+  textByPercentage(value: number): string {
+    if (value < 0.25) {
+      return "Chance de aprovação baixa";
+    } else if (value < 0.75) {
+      return "Chance de aprovação média";
+    } else {
+      return "Chance de aprovação alta";
     }
   }
 }

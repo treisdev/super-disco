@@ -1,28 +1,10 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons start>
       <button ion-button icon-only (click)="toggleBuscaTemas()">
         <ion-icon name="pricetag"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-segment [(ngModel)]="order" (ionChange)="onClickSearch($event)">
-      <ion-segment-button value="chance">
-        Chance
-      </ion-segment-button>
-      <ion-segment-button value="velocidade">
-        Velocidade
-      </ion-segment-button>
-    </ion-segment>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="toggleBuscaTexto()">
-        <ion-icon name="search"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content overflow-scroll=’true’>
-  <ion-toolbar color="primary" [hidden]="!buscaTexto">
     <ion-searchbar (ionInput)="busca($event)" [(ngModel)]="filtro" placeholder="Buscar..."></ion-searchbar>
     <ion-buttons end>
       <button ion-button icon-only (click)="onClickSearch()">
@@ -30,14 +12,16 @@
       </button>
     </ion-buttons>
   </ion-toolbar>
+</ion-header>
+
+<ion-content overflow-scroll=’true’>
   <ion-list *ngIf="buscaTemas" no-lines>
     <ion-list-header>Buscar por temas:</ion-list-header>
     <ion-item text-wrap>
-      <ion-badge color="light" (click)="limparFiltroTemas()">Todos</ion-badge>
-      <ion-badge *ngFor="let tema of temas" color="light" (click)="onClickTema(tema)">{{tema}}</ion-badge>
+      <button ion-button small color="light" (click)="limparFiltroTemas()">Todos</button>
+      <button *ngFor="let tema of temas" ion-button small color="light" (click)="onClickTema(tema)" text-wrap>{{tema}}</button>
     </ion-item>
   </ion-list>
-
   <ion-item><span style="font-size: 0.85em;">Total de registros: {{proposicoes.length}}</span></ion-item>
   <ion-list *ngIf="proposicoes.length > 0" [virtualScroll]="proposicoes" approxItemHeight="65px">
     <button ion-item *virtualItem="let proposicao" (click)="onClickProposicao(proposicao)">
@@ -46,13 +30,12 @@
       </ion-avatar>
       <h2>
         {{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}
-        <ion-badge style="margin: 1px" color="{{colorTagBasedOnData(proposicao.chance, 1, true)}}">
-          {{this.Math.round(proposicao.chance*100)}}%
-        </ion-badge>
-        <ion-badge style="margin: 1px" color="{{colorTagBasedOnData(proposicao.velocidade, 50)}}">
-          {{proposicao.velocidade}}
-        </ion-badge>
       </h2>
+      <div class="barra-full">
+        <div class="barra-chance" [style]="widthStyleByPercentage(proposicao.chance)">
+              {{textByPercentage(proposicao.chance)}}
+        </div>
+      </div>
       <p>
         <ion-badge *ngFor="let tema of proposicao.temas" style="margin: 1px" color="light">{{tema.tema}}</ion-badge>
       </p>
