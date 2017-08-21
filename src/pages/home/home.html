@@ -35,7 +35,7 @@
         <ion-badge *ngFor="let tema of proposicao.temas" style="margin: 1px" color="light">{{tema.tema}}</ion-badge>
       </p>
       <ion-icon 
-      name="{{proposicao.chance > 0.25 ? 'thumbs-up' : 'thumbs-down'}}" item-end 
+      name="{{proposicao.chance > 0.5 ? 'thumbs-up' : 'thumbs-down'}}" item-end 
       color="{{proposicao.chance > 0.75 ? 'green' : proposicao.chance < 0.25 ? 'red' : 'medium'}}"></ion-icon>
     </button>
   </ion-list>
