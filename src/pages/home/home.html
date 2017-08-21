@@ -31,14 +31,12 @@
       <h2>
         {{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}
       </h2>
-      <div class="barra-full">
-        <div class="barra-chance" [style]="widthStyleByPercentage(proposicao.chance)">
-              {{textByPercentage(proposicao.chance)}}
-        </div>
-      </div>
       <p>
         <ion-badge *ngFor="let tema of proposicao.temas" style="margin: 1px" color="light">{{tema.tema}}</ion-badge>
       </p>
+      <ion-icon 
+      name="{{proposicao.chance > 0.25 ? 'thumbs-up' : 'thumbs-down'}}" item-end 
+      color="{{proposicao.chance > 0.75 ? 'green' : proposicao.chance < 0.25 ? 'red' : 'medium'}}"></ion-icon>
     </button>
   </ion-list>
   <ion-item *ngIf="proposicoes.length == 0">Não há proposições</ion-item>
