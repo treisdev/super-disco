@@ -19,21 +19,23 @@
 
 
 <ion-content padding>
-  <h2>Ementa:</h2>
+  <h2>Ementa</h2>
   <p>{{proposicao.ementa}}</p>
   <h2>Indicadores</h2>
-  <p>Chance: {{proposicaoQuery.chance*100}}%</p>
-  <p>Velocidade: {{proposicaoQuery.velocidade}} tramitacoes/mes</p>
-  <p>Tramitacoes: {{proposicaoQuery.qtd_tramitacoes}}</p>
-  <h2>Temas:</h2>
+  <ul>
+    <li>Chance de aprovação: {{proposicaoQuery.chance*100}}%</li>
+    <li>Velocidade: {{proposicaoQuery.velocidade}} tramitacoes/mes</li>
+    <li>Tramitacoes: {{proposicaoQuery.qtd_tramitacoes}}</li>
+  </ul>
+  <h2>Temas</h2>
   <ul>
     <li *ngFor="let tema of proposicaoQuery.temas">{{tema.tema}}</li>
   </ul>
-  <h2>Comissoes:</h2>
+  <h2>Comissões</h2>
   <p text-wrap>
     <ion-badge *ngFor="let comissao of proposicaoQuery.comissoes" style="margin: 1px" color="light">{{comissao.comissao}}</ion-badge>
   </p>
-  <h2>Palavras-chave:</h2>
+  <h2>Palavras-chave</h2>
   <p text-wrap>
     <ion-badge *ngFor="let keyword of proposicao.keywords" style="margin: 1px" color="light">{{keyword}}</ion-badge>
   </p>
