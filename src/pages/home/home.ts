@@ -3,6 +3,7 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { NavController, LoadingController } from "ionic-angular";
 
 import { DetailPage } from "../detail/detail";
+
 const aprovometro = require("../../resources/aprovometro.json");
 const temas = require("../../resources/temas.json");
 
@@ -25,7 +26,7 @@ export class HomePage {
   buscaTemas: boolean = false;
   buscaTexto: boolean = false;
   temas: Array<string> = [];
-  order: string = "chance";
+  order: string;
   Math: any;
 
   constructor(
@@ -36,6 +37,7 @@ export class HomePage {
     this.Math = Math;
     this.proposicoes = aprovometro;
     this.temas = temas;
+    this.order = "chance";
   }
 
   public busca(ev) {
@@ -58,10 +60,6 @@ export class HomePage {
   }
 
   public filtrar() {
-    let loading = this.loadingCtrl.create({
-      content: "Filtrando..."
-    });
-    loading.present();
     const proposicoesFiltradas = aprovometro.filter(
       proposicao =>
         `${proposicao.siglaTipo} ${proposicao.numero}/${proposicao.ano}`
@@ -70,14 +68,9 @@ export class HomePage {
         filtrarTemas(proposicao.temas, this.filtroTemas)
     );
     this.proposicoes = proposicoesFiltradas;
-    loading.dismiss();
   }
 
   public ordernar() {
-    let loading = this.loadingCtrl.create({
-      content: "Ordenando..."
-    });
-    loading.present();
     const proposicoesTemp = this.proposicoes.filter(proposicao =>
       filtrarTemas(proposicao.temas, this.filtroTemas)
     );
@@ -87,7 +80,6 @@ export class HomePage {
       return aProp < bProp ? 1 : aProp > bProp ? -1 : 0;
     });
     this.proposicoes = proposicoesTemp;
-    loading.dismiss();
   }
 
   public toggleBuscaTemas() {
