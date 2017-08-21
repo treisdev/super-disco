@@ -21,6 +21,8 @@
 <ion-content padding>
   <h2>Ementa</h2>
   <p>{{proposicao.ementa}}</p>
+  <h2>Última situação</h2>
+  <p *ngIf="proposicao.statusProposicao">{{proposicao.statusProposicao.descricaoSituacao}}</p>
   <h2>Indicadores</h2>
   <ul>
     <li>Chance de aprovação: {{proposicaoQuery.chance*100}}%</li>
