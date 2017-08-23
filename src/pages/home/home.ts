@@ -62,8 +62,6 @@ export class HomePage {
     } else {
       this.proposicoes = aprovometro;
     }
-
-    console.log(this.proposicoes);
   }
 
   public onClickProposicao(proposicao) {
@@ -89,9 +87,9 @@ export class HomePage {
   }
 
   public chanceToText(chance) {
-    if (chance > cutoffAlta) return 'ALTA';
-    if (chance > cutoffMedia) return 'MÉDIA';
-    return 'BAIXA';
+    if (chance > cutoffAlta) return "ALTA";
+    if (chance > cutoffMedia) return "MÉDIA";
+    return "BAIXA";
   }
 
   public proposicaoHeaderFn(record, recordIndex, records) {
