@@ -8,13 +8,15 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { DetailPage } from '../pages/detail/detail';
+import { AboutPage } from '../pages/about/about';
 import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    DetailPage
+    DetailPage,
+    AboutPage
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { ApiProvider } from '../providers/api/api';
   entryComponents: [
     MyApp,
     HomePage,
-    DetailPage
+    DetailPage,
+    AboutPage
   ],
   providers: [
     StatusBar,

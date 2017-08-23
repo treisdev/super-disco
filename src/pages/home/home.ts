@@ -3,6 +3,7 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { NavController, LoadingController } from "ionic-angular";
 
 import { DetailPage } from "../detail/detail";
+import { AboutPage } from "../about/about";
 
 const aprovometro = require("../../resources/aprovometro.json");
 const temas = require("../../resources/temas.json");
@@ -29,6 +30,8 @@ export class HomePage {
   order: string;
   Math: any;
 
+  aboutPage: any;
+
   constructor(
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
@@ -38,6 +41,7 @@ export class HomePage {
     this.proposicoes = aprovometro;
     this.temas = temas;
     this.order = "chance";
+    this.aboutPage = AboutPage;
   }
 
   public busca(ev) {
