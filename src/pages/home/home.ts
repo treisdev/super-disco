@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { NavController, LoadingController } from "ionic-angular";
 
 import { DetailPage } from "../detail/detail";
@@ -74,66 +73,9 @@ export class HomePage {
     this.proposicoes = proposicoesFiltradas;
   }
 
-  public ordernar() {
-    const proposicoesTemp = this.proposicoes.filter(proposicao =>
-      filtrarTemas(proposicao.temas, this.filtroTemas)
-    );
-    proposicoesTemp.sort((a, b) => {
-      const aProp = a && a[this.order];
-      const bProp = b && b[this.order];
-      return aProp < bProp ? 1 : aProp > bProp ? -1 : 0;
-    });
-    this.proposicoes = proposicoesTemp;
-  }
-
-  public toggleBuscaTemas() {
-    this.buscaTemas = !this.buscaTemas;
-  }
-  public toggleBuscaTexto() {
-    this.buscaTexto = !this.buscaTexto;
-  }
-
   public onClickProposicao(proposicao) {
     this.navCtrl.push(DetailPage, { proposicao });
   }
 
-  onClickTema(tema) {
-    this.filtroTemas = [tema];
-    this.filtrar();
-    this.buscaTemas = false;
-  }
 
-  limparFiltroTemas() {
-    this.filtroTemas = [];
-    this.filtrar();
-    this.buscaTemas = false;
-  }
-
-  colorByPercentage(value): string {
-    const green400 = "#66BB6A";
-    const amber400 = "#FFCA28";
-    const red500 = "#F44336";
-    const colors = [red500, amber400, green400];
-    if (value < 0.25) {
-      return colors[0];
-    } else if (value < 0.75) {
-      return colors[1];
-    } else {
-      return colors[2];
-    }
-  }
-
-  widthStyleByPercentage(value: number): SafeStyle {
-    return this.sanitizer.bypassSecurityTrustStyle(`width: ${value * 100}%; background-color: ${this.colorByPercentage(value)}!important`);
-  }
-
-  textByPercentage(value: number): string {
-    if (value < 0.25) {
-      return "Chance de aprovação baixa";
-    } else if (value < 0.75) {
-      return "Chance de aprovação média";
-    } else {
-      return "Chance de aprovação alta";
-    }
-  }
 }
