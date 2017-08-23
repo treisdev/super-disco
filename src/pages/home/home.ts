@@ -75,5 +75,17 @@ export class HomePage {
     this.navCtrl.push(DetailPage, { proposicao });
   }
 
+  public proposicaoHeaderFn(record, recordIndex, records) {
+    if (recordIndex === 0) {
+      return 'Alta chance de aprovação';
+    }
+    if (records[recordIndex - 1].chance > 0.5 && records[recordIndex].chance <= 0.5) {
+      return 'Média chance de aprovação';
+    }
+    if (records[recordIndex - 1].chance > 0.25 && records[recordIndex].chance <= 0.25) {
+      return 'Baixa chance de aprovação';
+    }
+    return null;
+  }
 
 }

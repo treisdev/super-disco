@@ -23,7 +23,10 @@
     </ion-item>
   </ion-list>
   <ion-item><span style="font-size: 0.85em;">Total de registros: {{proposicoes.length}}</span></ion-item>
-  <ion-list *ngIf="proposicoes.length > 0" [virtualScroll]="proposicoes" approxItemHeight="65px">
+  <ion-list *ngIf="proposicoes.length > 0" [virtualScroll]="proposicoes" approxItemHeight="65px" [headerFn]="proposicaoHeaderFn">
+    <ion-item-divider *virtualHeader="let header">
+      {{ header }}
+    </ion-item-divider>
     <button ion-item *virtualItem="let proposicao" (click)="onClickProposicao(proposicao)">
       <ion-avatar item-start>
         <img [src]="proposicao.tipoImg">
@@ -35,7 +38,7 @@
         <ion-badge *ngFor="let tema of proposicao.temas" style="margin: 1px" color="light">{{tema.tema}}</ion-badge>
       </p>
       <ion-avatar item-end>
-        <img  style="width: 32px; height: 32px" src="{{proposicao.chance > 0.75 ? '/assets/img/badge-alta.png' : proposicao.chance < 0.25 ? '/assets/img/badge-baixa.png' : '/assets/img/badge-media.png'}}">
+        <img  style="width: 32px; height: 32px" src="{{proposicao.chance > 0.5 ? '/assets/img/badge-alta.png' : proposicao.chance < 0.25 ? '/assets/img/badge-baixa.png' : '/assets/img/badge-media.png'}}">
       </ion-avatar>
     </button>
   </ion-list>
