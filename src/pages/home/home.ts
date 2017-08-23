@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { NavController, LoadingController } from "ionic-angular";
 
 import { DetailPage } from "../detail/detail";
@@ -105,22 +105,30 @@ export class HomePage {
     this.buscaTemas = false;
   }
 
-  colorByPercentage(value): string {
-    const green400 = "#66BB6A";
-    const amber400 = "#FFCA28";
-    const red500 = "#F44336";
-    const colors = [red500, amber400, green400];
-    if (value < 0.25) {
-      return colors[0];
-    } else if (value < 0.75) {
-      return colors[1];
-    } else {
-      return colors[2];
-    }
+  public percentToHex(value) {
+    const hue = (value * 120).toString(10);
+    return ["hsl(", hue, ",80%,40%)"].join("");
+  }
+
+  public getColorByBgColor(bgColor) {
+    return parseInt(bgColor.replace("#", ""), 16) > 0xffffff / 2
+      ? "#333"
+      : "#fff";
+  }
+
+  public colorByPercentage(value): any {
+    const background = this.percentToHex(value);
+    const foreground = this.getColorByBgColor(background);
+
+    return { background, foreground };
   }
 
   widthStyleByPercentage(value: number): SafeStyle {
-    return this.sanitizer.bypassSecurityTrustStyle(`width: ${value * 100}%; background-color: ${this.colorByPercentage(value)}!important`);
+    return this.sanitizer.bypassSecurityTrustStyle(
+      `width: ${value * 100}%; background-color: ${this.colorByPercentage(
+        value
+      )}!important`
+    );
   }
 
   textByPercentage(value: number): string {
