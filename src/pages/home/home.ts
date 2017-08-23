@@ -33,8 +33,7 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    public loadingCtrl: LoadingController,
-    private sanitizer: DomSanitizer
+    public loadingCtrl: LoadingController
   ) {
     this.Math = Math;
     this.proposicoes = aprovometro;
@@ -59,7 +58,6 @@ export class HomePage {
     if (val && val.trim() != "") {
       this.filtrar();
     }
-    this.ordernar();
   }
 
   public filtrar() {
