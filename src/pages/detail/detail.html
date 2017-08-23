@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-buttons start>
       <button ion-button icon-only navPop>
       </button>
@@ -25,8 +25,8 @@
   <p *ngIf="proposicao.statusProposicao">{{proposicao.statusProposicao.descricaoSituacao}}</p>
   <h2>Indicadores</h2>
   <ul>
-    <li>Chance de aprovação: {{proposicaoQuery.chance*100}}%</li>
-    <li>Velocidade: {{proposicaoQuery.velocidade}} tramitacoes/mes</li>
+    <!-- <li>Chance de aprovação: {{proposicaoQuery.chance*100}}%</li>
+    <li>Velocidade: {{proposicaoQuery.velocidade}} tramitacoes/mes</li> -->
     <li>Tramitacoes: {{proposicaoQuery.qtd_tramitacoes}}</li>
   </ul>
   <h2>Temas</h2>
