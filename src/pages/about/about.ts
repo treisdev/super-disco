@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+const packageInfo = require("../../../package.json");
+
 /**
  * Generated class for the AboutPage page.
  *
@@ -13,8 +15,10 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'about.html',
 })
 export class AboutPage {
+  version: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.version = packageInfo.version;
   }
 
   ionViewDidLoad() {
