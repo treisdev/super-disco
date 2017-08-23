@@ -6,6 +6,9 @@ import { AboutPage } from "../about/about";
 
 const aprovometro = require("../../resources/aprovometro.json");
 
+const cutoffAlta = 0.5;
+const cutoffMedia = 0.1;
+
 @Component({
   selector: "page-home",
   templateUrl: "home.html"
@@ -77,21 +80,33 @@ export class HomePage {
     return { background, foreground };
   }
 
+  public chanceToText(chance) {
+    if (chance > cutoffAlta) return 'ALTA';
+    if (chance > cutoffMedia) return 'MÉDIA';
+    return 'BAIXA';
+  }
+
   public proposicaoHeaderFn(record, recordIndex, records) {
+    const altaChanceHeader = "Alta chance de aprovação";
+    const mediaChanceHeader = "Média chance de aprovação";
+    const baixaChanceHeader = "Baixa chance de aprovação";
+
     if (recordIndex === 0) {
-      return "Alta chance de aprovação";
+      if (record.chance > cutoffAlta) return altaChanceHeader;
+      if (record.chance > cutoffMedia) return mediaChanceHeader;
+      return baixaChanceHeader;
     }
     if (
-      records[recordIndex - 1].chance > 0.5 &&
-      records[recordIndex].chance <= 0.5
+      records[recordIndex - 1].chance > cutoffAlta &&
+      records[recordIndex].chance <= cutoffAlta
     ) {
-      return "Média chance de aprovação";
+      return mediaChanceHeader;
     }
     if (
-      records[recordIndex - 1].chance > 0.25 &&
-      records[recordIndex].chance <= 0.25
+      records[recordIndex - 1].chance > cutoffMedia &&
+      records[recordIndex].chance <= cutoffMedia
     ) {
-      return "Baixa chance de aprovação";
+      return baixaChanceHeader;
     }
     return null;
   }
