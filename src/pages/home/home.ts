@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { NavController, LoadingController } from "ionic-angular";
+import * as latinize from "latinize";
 
 import { DetailPage } from "../detail/detail";
 import { AboutPage } from "../about/about";
@@ -30,29 +31,36 @@ export class HomePage {
   public busca(ev) {
     let val = ev.target.value;
     if (!val || val.trim() == "") {
-      this.onClickSearch();
-    }
-  }
-
-  public onClickSearch() {
-    this.proposicoes = aprovometro;
-    // set val to the value of the searchbar
-    let val = this.filtro;
-
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != "") {
       this.filtrar();
     }
   }
 
+  public onClickSearch() {
+    this.filtrar();
+  }
+
   public filtrar() {
-    const proposicoesFiltradas = aprovometro.filter(
-      proposicao =>
-        `${proposicao.siglaTipo} ${proposicao.numero}/${proposicao.ano}`
-          .toLowerCase()
-          .indexOf(this.filtro) > -1
-    );
-    this.proposicoes = proposicoesFiltradas;
+    if (this.filtro) {
+      const proposicoesFiltradas = aprovometro.filter(
+        proposicao =>
+          latinize(
+            `${proposicao.siglaTipo} ${proposicao.numero}/${proposicao.ano} ${proposicao.temas
+              ? proposicao.temas.reduce(
+                  (concatString, tema) =>
+                    tema ? `${concatString} ${tema.tema}` : concatString,
+                  " "
+                )
+              : ""}`
+          )
+            .toLowerCase()
+            .indexOf(latinize(this.filtro.toLowerCase())) > -1
+      );
+      this.proposicoes = proposicoesFiltradas;
+    } else {
+      this.proposicoes = aprovometro;
+    }
+
+    console.log(this.proposicoes);
   }
 
   public onClickProposicao(proposicao) {

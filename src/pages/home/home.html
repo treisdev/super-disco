@@ -16,7 +16,10 @@
 
 <ion-content overflow-scroll=’true’>
   <ion-item><span style="font-size: 0.85em;">Total de registros: {{proposicoes.length}}</span></ion-item>
-  <ion-list *ngIf="proposicoes.length > 0" [virtualScroll]="proposicoes" approxItemHeight="65px" [headerFn]="proposicaoHeaderFn">
+  <ion-item *ngIf="proposicoes.length === 0">
+    <span text-wrap style="font-size: 0.85em;"><strong>Nenhuma proposição encontrada.</strong><br>Exibindo todas as proposições.</span>
+  </ion-item>
+  <ion-list [virtualScroll]="proposicoes" approxItemHeight="65px" [headerFn]="proposicaoHeaderFn">
     <ion-item-divider *virtualHeader="let header">
       {{ header }}
     </ion-item-divider>
