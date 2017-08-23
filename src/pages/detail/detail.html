@@ -21,22 +21,46 @@
 <ion-content padding>
   <h2>Ementa</h2>
   <p>{{proposicao.ementa}}</p>
+
   <h2>Última situação</h2>
   <p *ngIf="proposicao.statusProposicao">{{proposicao.statusProposicao.descricaoSituacao}}</p>
+
+  <h2>Chance de Aprovação</h2>
+  <p style="text-align: center">
+    <svg width="96" height="96" viewBox="0 0 154 154">
+      <polygon 
+      id="badge-background" 
+      [attr.fill]="this.colorByPercentage(proposicaoQuery.chance).background" 
+      points="77 144.5 67.6000075 151.408603 60.2134326 142.379363 49.3906585 146.733236 44.481627 136.150701 32.9161061 137.676275 30.7930703 126.205382 19.2115068 124.806799 20.007865 113.168309 9.13797107 108.933447 12.8036852 97.8586471 3.3284562 91.0535986 9.63319583 81.2383601 2.14799537 72.290711 10.6956106 64.3517613 5.67076128 53.8237254 15.924174 48.2598978 13.6754056 36.8129904 24.9903561 33.9738807 25.6589671 22.3273529 37.3244955 22.3913529 40.8684744 11.276999 52.1515927 14.2400872 58.3482585 4.35626292 68.5400067 10.0322577 77 2 85.4599933 10.0322577 95.6517415 4.35626292 101.848407 14.2400872 113.131526 11.276999 116.675505 22.3913529 128.341033 22.3273529 129.009644 33.9738807 140.324594 36.8129904 138.075826 48.2598978 148.329239 53.8237254 143.304389 64.3517613 151.852005 72.290711 144.366804 81.2383601 150.671544 91.0535986 141.196315 97.8586471 144.862029 108.933447 133.992135 113.168309 134.788493 124.806799 123.20693 126.205382 121.083894 137.676275 109.518373 136.150701 104.609341 146.733236 93.7865674 142.379363 86.3999925 151.408603">
+      </polygon>
+      <text id="badge-chance-text" 
+            font-family="LucidaGrande-Bold, Lucida Grande" 
+            font-size="40" font-weight="bold" 
+            letter-spacing="-4.5" 
+            text-anchor="middle"
+            [attr.fill]="this.colorByPercentage(proposicaoQuery.chance).foreground"
+            x="76" y="90">
+        {{this.chanceToText(proposicaoQuery.chance)}}
+      </text>
+    </svg>
+  </p>
+
   <h2>Indicadores</h2>
   <ul>
-    <!-- <li>Chance de aprovação: {{proposicaoQuery.chance*100}}%</li>
-    <li>Velocidade: {{proposicaoQuery.velocidade}} tramitacoes/mes</li> -->
-    <li>Tramitacoes: {{proposicaoQuery.qtd_tramitacoes}}</li>
+    <li><strong>Tramitações no último mês: {{proposicaoQuery.velocidade}}</strong></li>
+    <li><strong>Tramitações: {{proposicaoQuery.qtd_tramitacoes}}</strong></li>
   </ul>
+
   <h2>Temas</h2>
   <ul>
     <li *ngFor="let tema of proposicaoQuery.temas">{{tema.tema}}</li>
   </ul>
+
   <h2>Comissões tramitadas</h2>
   <p text-wrap>
     <ion-badge *ngFor="let comissao of proposicaoQuery.comissoes" style="margin: 1px" color="light">{{comissao.comissao}}</ion-badge>
   </p>
+  
   <h2>Palavras-chave</h2>
   <p text-wrap>
     <ion-badge *ngFor="let keyword of proposicao.keywords" style="margin: 1px" color="light">{{keyword}}</ion-badge>

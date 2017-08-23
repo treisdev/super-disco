@@ -1,18 +1,14 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { NavController, NavParams } from "ionic-angular";
 
-import { ApiProvider } from '../../providers/api/api';
+import { ApiProvider } from "../../providers/api/api";
 
-/**
- * Generated class for the DetailPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+const cutoffAlta = 0.5;
+const cutoffMedia = 0.1;
 
 @Component({
-  selector: 'page-detail',
-  templateUrl: 'detail.html',
+  selector: "page-detail",
+  templateUrl: "detail.html"
 })
 export class DetailPage {
   proposicao: any = {};
@@ -21,9 +17,9 @@ export class DetailPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public api: ApiProvider,
+    public api: ApiProvider
   ) {
-    this.proposicaoQuery = navParams.get('proposicao');
+    this.proposicaoQuery = navParams.get("proposicao");
   }
 
   ionViewDidLoad() {
@@ -38,9 +34,33 @@ export class DetailPage {
             .map(res => res.json())
             .subscribe(resp => {
               this.proposicao = resp.dados;
-              this.proposicao.keywords = this.proposicao.keywords.split(',');
+              this.proposicao.keywords = this.proposicao.keywords.split(",");
             });
         }
       });
+  }
+
+  public percentToHex(value) {
+    const hue = (value * 120).toString(10);
+    return ["hsl(", hue, ",80%,40%)"].join("");
+  }
+
+  public getColorByBgColor(bgColor) {
+    return parseInt(bgColor.replace("#", ""), 16) > 0xffffff / 2
+      ? "#333"
+      : "#fff";
+  }
+
+  public colorByPercentage(value): any {
+    const background = this.percentToHex(value);
+    const foreground = this.getColorByBgColor(background);
+
+    return { background, foreground };
+  }
+
+  public chanceToText(chance) {
+    if (chance > cutoffAlta) return "ALTA";
+    if (chance > cutoffMedia) return "MÉDIA";
+    return "BAIXA";
   }
 }
