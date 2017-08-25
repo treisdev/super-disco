@@ -64,6 +64,19 @@ export class HomePage {
     }
   }
 
+  public colorByTipo(sigla) {
+    switch (sigla) {
+      case "PL":
+        return "#607D8B";
+      case "PLP":
+        return "#9E9E9E";
+      case "PEC":
+        return "#795548";
+      default:
+        return "#000";
+    }
+  }
+
   public onClickProposicao(proposicao) {
     this.navCtrl.push(DetailPage, { proposicao });
   }
