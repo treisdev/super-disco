@@ -15,5 +15,8 @@
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false
-  }
+  },
+  "types": [
+    "node"
+  ]
 }

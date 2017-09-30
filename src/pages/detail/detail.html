@@ -19,29 +19,32 @@
 
 
 <ion-content padding>
+  <ion-row text-center>
+    <ion-col class="chance">
+      <strong style="font-size: 2.0em">{{this.chanceToText(proposicaoQuery.chance)}}</strong><br>
+      <span style="font-size: 0.7em">Chance de aprovação</span>
+    </ion-col>
+  </ion-row>
+  <ion-row text-center>
+    <ion-col class="tramitacao">
+      <strong style="font-size: 1.5em">{{proposicaoQuery.velocidade}}</strong><br>
+      <span style="font-size: 0.7em">Tramitações último mês</span>
+    </ion-col>
+    <ion-col class="tramitacao">
+      <strong style="font-size: 1.5em">{{proposicaoQuery.qtd_tramitacoes}}</strong><br>
+      <span style="font-size: 0.7em">Tramitações totais</span>
+    </ion-col>
+  </ion-row>
+
   <h2>Ementa</h2>
   <p>{{proposicao.ementa}}</p>
 
+  <h2>Autor</h2>
+  <p>{{proposicao.autor}}</p>
+  <!-- TODO  COLOCAR AUTOR(ES) - PARTIDO-->
+
   <h2>Última situação</h2>
   <p *ngIf="proposicao.statusProposicao">{{proposicao.statusProposicao.descricaoSituacao}}</p>
-
-  <h2>Chance de Aprovação</h2>
-  <p style="text-align: center">
-    <svg width="96" height="96" viewBox="0 0 187 187">
-      <polygon id="Polygon" [attr.fill]="this.colorByPercentage(proposicaoQuery.chance).background" points="93.0762609 5 170.152522 49.5 170.152522 138.5 93.0762609 183 16 138.5 16 49.5"></polygon>
-      <text id="badge-chance-text" font-family="LucidaGrande-Bold, Lucida Grande" font-size="45" font-weight="bold" letter-spacing="-4.5"
-        text-anchor="middle" [attr.fill]="this.colorByPercentage(proposicaoQuery.chance).foreground" x="95" y="110">
-        {{this.chanceToText(proposicaoQuery.chance)}}
-      </text>
-    </svg>
-  </p>
-
-  <h2>Indicadores</h2>
-  <ul>
-    <li><strong>Tramitações no último mês: {{proposicaoQuery.velocidade}}</strong></li>
-    <li><strong>Tramitações: {{proposicaoQuery.qtd_tramitacoes}}</strong></li>
-  </ul>
-
   <h2>Temas</h2>
   <ul>
     <li *ngFor="let tema of proposicaoQuery.temas">{{tema.tema}}</li>
@@ -55,6 +58,13 @@
   <h2>Palavras-chave</h2>
   <p text-wrap>
     <ion-badge *ngFor="let keyword of proposicao.keywords" style="margin: 1px" color="light">{{keyword}}</ion-badge>
+  </p>
+
+  <p text-center>
+    <a ion-button align-self-center href="http://www.camaradeputados.leg.br">
+      Ver Proposição &nbsp;
+      <ion-icon ios="ios-open-outline" md="md-open" icon-right></ion-icon>
+    </a>
   </p>
   <p [hidden]="true">{{proposicao | json}}</p>
 </ion-content>

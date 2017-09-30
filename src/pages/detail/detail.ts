@@ -59,8 +59,8 @@ export class DetailPage {
   }
 
   public chanceToText(chance) {
-    if (chance > cutoffAlta) return "ALTA";
-    if (chance > cutoffMedia) return "MÉDIA";
-    return "BAIXA";
+    if (chance > cutoffAlta) return "Alta";
+    if (chance > cutoffMedia) return "Média";
+    return "Baixa";
   }
 }

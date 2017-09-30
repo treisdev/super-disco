@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http'; 
+import { HttpModule } from '@angular/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -12,29 +12,10 @@ import { AboutPage } from '../pages/about/about';
 import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    DetailPage,
-    AboutPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
-    HttpModule
-  ],
+  declarations: [MyApp, HomePage, DetailPage, AboutPage],
+  imports: [BrowserModule, IonicModule.forRoot(MyApp, { backButtonText: 'Voltar' }), HttpModule],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    DetailPage,
-    AboutPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ApiProvider
-  ]
+  entryComponents: [MyApp, HomePage, DetailPage, AboutPage],
+  providers: [StatusBar, SplashScreen, { provide: ErrorHandler, useClass: IonicErrorHandler }, ApiProvider]
 })
 export class AppModule {}
