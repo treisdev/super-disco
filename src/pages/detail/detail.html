@@ -19,20 +19,20 @@
 
 
 <ion-content padding>
-  <ion-row text-center>
-    <ion-col class="chance">
-      <strong style="font-size: 2.0em">{{this.chanceToText(proposicaoQuery.chance)}}</strong><br>
-      <span style="font-size: 0.7em">Chance de aprovação</span>
+  <ion-row text-center class="chance">
+    <ion-col class="{{chanceToClass(proposicaoQuery.chance)}}">
+      <strong class="chance-title">{{chanceToText(proposicaoQuery.chance)}}</strong><br>
+      <span class="subtitle">Chance de aprovação</span>
     </ion-col>
   </ion-row>
   <ion-row text-center>
     <ion-col class="tramitacao">
-      <strong style="font-size: 1.5em">{{proposicaoQuery.velocidade}}</strong><br>
-      <span style="font-size: 0.7em">Tramitações último mês</span>
+      <strong class="tramitacao-title">{{proposicaoQuery.velocidade}}</strong><br>
+      <span class="subtitle">Tramitações último mês</span>
     </ion-col>
     <ion-col class="tramitacao">
-      <strong style="font-size: 1.5em">{{proposicaoQuery.qtd_tramitacoes}}</strong><br>
-      <span style="font-size: 0.7em">Tramitações totais</span>
+      <strong class="tramitacao-title">{{proposicaoQuery.qtd_tramitacoes}}</strong><br>
+      <span class="subtitle">Tramitações totais</span>
     </ion-col>
   </ion-row>
 

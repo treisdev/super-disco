@@ -63,4 +63,10 @@ export class DetailPage {
     if (chance > cutoffMedia) return "Média";
     return "Baixa";
   }
+
+  public chanceToClass(chance) {
+    if (chance > cutoffAlta) return "chancealta";
+    if (chance > cutoffMedia) return "chancemedia";
+    return "chancebaixa";
+  }
 }

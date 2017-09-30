@@ -64,11 +64,11 @@ export class HomePage {
   public colorByTipo(sigla) {
     switch (sigla) {
       case 'PL':
-        return '#607D8B';
+        return '#2c3e50';
       case 'PLP':
-        return '#9E9E9E';
+        return '#95a5a6';
       case 'PEC':
-        return '#795548';
+        return '#8e44ad';
       default:
         return '#000';
     }
@@ -78,13 +78,18 @@ export class HomePage {
     this.navCtrl.push(DetailPage, { proposicao });
   }
 
-  public percentToHex(value) {
+  public percentToHex(chance) {
+    if (chance > cutoffAlta) return '#59ad43';
+    if (chance > cutoffMedia) return '#f1c40f';
+    return '#e74c3c';/*
     const hue = (value * 120).toString(10);
     return ['hsl(', hue, ',80%,40%)'].join('');
+    */
   }
 
   public getColorByBgColor(bgColor) {
-    return parseInt(bgColor.replace('#', ''), 16) > 0xffffff / 2 ? '#333' : '#fff';
+    return '#fff';
+    /*return parseInt(bgColor.replace('#', ''), 16) > 0xffffff / 2 ? '#333' : '#fff';*/
   }
 
   public colorByPercentage(value): any {

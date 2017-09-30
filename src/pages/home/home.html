@@ -33,7 +33,7 @@
     <button ion-item *virtualItem="let proposicao" (click)="onClickProposicao(proposicao)">
       <ion-avatar item-start>
           <svg height="50" width="50" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="40" [attr.fill]="this.colorByTipo(proposicao.siglaTipo)" />
+            <circle cx="50" cy="50" r="40" [attr.fill]="colorByTipo(proposicao.siglaTipo)" />
             <text font-family="LucidaGrande-Bold, Lucida Grande"
               font-size="30" font-weight="bold"
               text-anchor="middle"
@@ -52,14 +52,14 @@
       </p>
       <ion-avatar item-end>
         <svg width="32" height="32" viewBox="0 0 187 187">
-            <polygon id="Polygon" [attr.fill]="this.colorByPercentage(proposicao.chance).background"
+            <polygon id="Polygon" [attr.fill]="colorByPercentage(proposicao.chance).background"
                      points="93.0762609 5 170.152522 49.5 170.152522 138.5 93.0762609 183 16 138.5 16 49.5"></polygon>
             <text id="badge-chance-text"
               font-family="LucidaGrande-Bold, Lucida Grande"
               font-size="45" font-weight="bold"
               letter-spacing="-4.5"
               text-anchor="middle"
-              [attr.fill]="this.colorByPercentage(proposicao.chance).foreground"
+              [attr.fill]="colorByPercentage(proposicao.chance).foreground"
               x="95" y="110">
               {{this.chanceToText(proposicao.chance)}}
             </text>
