@@ -49,10 +49,10 @@ export class DetailPage {
     var prob = [this.proposicaoQuery.chance];
 
     // Define as margens, altura e largura
-    var margin = { top: 0, right: 15, bottom: 20, left: 15 };
+    var margin = { top: 0, right: 10, bottom: 0, left: 10 };
     var paddingarea = 16 + 16;
     var width = this.platform.width() - paddingarea - margin.left - margin.right;
-    var height = 80 - margin.top - margin.bottom;
+    var height = 30 - margin.top - margin.bottom;
 
     // Cria o svg
     var svg = d3
@@ -91,8 +91,8 @@ export class DetailPage {
     svg
       .append('rect')
       .attr('width', 'calc(100% - 40px)')
-      .attr('height', 20)
-      .attr('transform', 'translate(0, 40)')
+      .attr('height', 10)
+      .attr('transform', 'translate(0, 20)')
       .style('fill', 'url(#linear-gradient)');
 
     // Escala do eixo x
@@ -108,7 +108,7 @@ export class DetailPage {
       .symbol()
       .type(d3.symbolTriangle)
       .size(function(d) {
-        return 20 * 20;
+        return 10 * 10;
       });
 
     // Adiciona o triângulo à visualização
@@ -122,14 +122,14 @@ export class DetailPage {
       .enter()
       .append('path')
       .attr('d', arc)
-      .attr('fill', '#488aff')
+      .attr('fill', '#2980b9')
       .attr('transform', function(d) {
-        return 'translate(' + x(0) + ',20) rotate(180)';
+        return 'translate(' + x(0) + ',10) rotate(180)';
       })
       .transition()
       .duration(3000)
       .attr('transform', function(d) {
-        return 'translate(' + x(prob[0]) + ',20) rotate(180)';
+        return 'translate(' + x(prob[0]) + ',10) rotate(180)';
       });
   }
 
