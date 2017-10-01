@@ -44,10 +44,6 @@
   <h2>Ementa</h2>
   <p>{{proposicao.ementa}}</p>
 
-  <h2>Autor</h2>
-  <p>{{proposicao.autor}}</p>
-  <!-- TODO  COLOCAR AUTOR(ES) - PARTIDO-->
-
   <h2>Última situação</h2>
   <p *ngIf="proposicao.statusProposicao">{{proposicao.statusProposicao.descricaoSituacao}}</p>
   <h2>Temas</h2>
@@ -66,7 +62,7 @@
   </p>
 
   <p text-center>
-    <a ion-button align-self-center href="http://www.camaradeputados.leg.br">
+    <a ion-button align-self-center href="{{proposicao.uri}}">
       Ver Proposição &nbsp;
       <ion-icon ios="ios-open-outline" md="md-open" icon-right></ion-icon>
     </a>
