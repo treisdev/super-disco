@@ -28,7 +28,7 @@
   <ion-row text-center>
     <ion-col class="tramitacao">
       <strong class="tramitacao-title">{{proposicaoQuery.velocidade}}</strong><br>
-      <span class="subtitle">Tramitações último mês</span>
+      <span class="subtitle">Tramitações recentes*</span>
     </ion-col>
     <ion-col class="tramitacao">
       <strong class="tramitacao-title">{{proposicaoQuery.qtd_tramitacoes}}</strong><br>
@@ -66,5 +66,7 @@
       <ion-icon ios="ios-open-outline" md="md-open" icon-right></ion-icon>
     </a>
   </p>
+
+  <p text-wrap style="font-size: 0.85em;">*Período das tramitações recentes: 30/08 a 30/09/2017.</p>
   <p [hidden]="true">{{proposicao | json}}</p>
 </ion-content>

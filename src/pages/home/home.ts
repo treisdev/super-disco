@@ -9,6 +9,39 @@ const aprovometro = require('../../resources/aprovometro.json');
 
 const cutoffAlta = 0.5;
 const cutoffMedia = 0.1;
+const FAKE_LOADING_TIME: number = 50;
+
+const byHotDesc = (a: any, b: any): number => {
+  if (a.velocidade < b.velocidade) {
+    return 1;
+  }
+  if (a.velocidade > b.velocidade) {
+    return -1;
+  }
+  if (a.chance < b.chance) {
+    return 1;
+  }
+  if (a.chance > b.chance) {
+    return -1;
+  }
+  return 0;
+};
+
+const byChanceDesc = (a: any, b: any): number => {
+  if (a.chance < b.chance) {
+    return 1;
+  }
+  if (a.chance > b.chance) {
+    return -1;
+  }
+  if (a.velocidade < b.velocidade) {
+    return 1;
+  }
+  if (a.velocidade > b.velocidade) {
+    return -1;
+  }
+  return 0;
+};
 
 @Component({
   selector: 'page-home',
@@ -16,33 +49,46 @@ const cutoffMedia = 0.1;
 })
 export class HomePage {
   proposicoes: Array<any> = [];
+  items: Array<any> = [];
   filtro: string = '';
   ordenacao: string;
-  Math: any;
 
   aboutPage: any;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController) {
-    this.Math = Math;
-    this.proposicoes = aprovometro;
-    this.aboutPage = AboutPage;
+    this.proposicoes = aprovometro.slice();
     this.ordenacao = 'chance';
-  }
-
-  public busca(ev) {
-    let val = ev.target.value;
-    if (!val || val.trim() == '') {
-      this.filtrar();
+    for (let i = 0; i < 30; i++) {
+      if (this.items.length < this.proposicoes.length) {
+        this.items.push(this.proposicoes[this.items.length]);
+      }
     }
+    this.aboutPage = AboutPage;
   }
 
-  public onClickSearch() {
-    this.filtrar();
+  doInfinite(infiniteScroll) {
+    if (this.items.length >= this.proposicoes.length) {
+      infiniteScroll.complete();
+      return;
+    }
+
+    setTimeout(() => {
+      for (let i = 0; i < 30; i++) {
+        if (this.items.length < this.proposicoes.length) {
+          this.items.push(this.proposicoes[this.items.length]);
+        }
+      }
+      infiniteScroll.complete();
+    }, FAKE_LOADING_TIME);
+  }
+
+  public onClickProposicao(proposicao) {
+    this.navCtrl.push(DetailPage, { proposicao });
   }
 
   public filtrar() {
     if (this.filtro) {
-      const proposicoesFiltradas = aprovometro.filter(
+      this.proposicoes = aprovometro.filter(
         proposicao =>
           latinize(
             `${proposicao.siglaTipo} ${proposicao.numero}/${proposicao.ano} ${proposicao.temas
@@ -55,9 +101,20 @@ export class HomePage {
             .toLowerCase()
             .indexOf(latinize(this.filtro.toLowerCase())) > -1
       );
-      this.proposicoes = proposicoesFiltradas;
+      if (this.ordenacao != 'chance') {
+        this.proposicoes.sort(byHotDesc);
+      } else {
+        this.proposicoes.sort(byChanceDesc);
+      }
+      this.items = this.proposicoes.slice(0, 30);
     } else {
       this.proposicoes = aprovometro;
+      if (this.ordenacao != 'chance') {
+        this.proposicoes.sort(byHotDesc);
+      } else {
+        this.proposicoes.sort(byChanceDesc);
+      }
+      this.items = this.proposicoes.slice(0, 30);
     }
   }
 
@@ -74,57 +131,15 @@ export class HomePage {
     }
   }
 
-  public onClickProposicao(proposicao) {
-    this.navCtrl.push(DetailPage, { proposicao });
-  }
-
-  public percentToHex(chance) {
+  public colorByPercentage(chance) {
     if (chance > cutoffAlta) return '#59ad43';
     if (chance > cutoffMedia) return '#f1c40f';
-    return '#e74c3c';/*
-    const hue = (value * 120).toString(10);
-    return ['hsl(', hue, ',80%,40%)'].join('');
-    */
-  }
-
-  public getColorByBgColor(bgColor) {
-    return '#fff';
-    /*return parseInt(bgColor.replace('#', ''), 16) > 0xffffff / 2 ? '#333' : '#fff';*/
-  }
-
-  public colorByPercentage(value): any {
-    const background = this.percentToHex(value);
-    const foreground = this.getColorByBgColor(background);
-
-    return { background, foreground };
+    return '#e74c3c';
   }
 
   public chanceToText(chance) {
     if (chance > cutoffAlta) return 'ALTA';
     if (chance > cutoffMedia) return 'MÉDIA';
     return 'BAIXA';
-  }
-
-  public proposicaoHeaderFn(record, recordIndex, records) {
-    const altaChanceHeader = 'Alta chance de aprovação';
-    const mediaChanceHeader = 'Média chance de aprovação';
-    const baixaChanceHeader = 'Baixa chance de aprovação';
-
-    if (recordIndex === 0) {
-      if (record.chance > cutoffAlta) return altaChanceHeader;
-      if (record.chance > cutoffMedia) return mediaChanceHeader;
-      return baixaChanceHeader;
-    }
-    if (records[recordIndex - 1].chance > cutoffAlta && records[recordIndex].chance <= cutoffAlta) {
-      return mediaChanceHeader;
-    }
-    if (records[recordIndex - 1].chance > cutoffMedia && records[recordIndex].chance <= cutoffMedia) {
-      return baixaChanceHeader;
-    }
-    return null;
-  }
-
-  onChangeOrdenacao() {
-    console.log(this.ordenacao);
   }
 }
