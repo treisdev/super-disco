@@ -41,11 +41,26 @@
     </ion-col>
   </ion-row>
 
-  <h2>Ementa</h2>
-  <p>{{proposicao.ementa}}</p>
+  <div *ngIf="proposicao">
 
-  <h2>Última situação</h2>
-  <p *ngIf="proposicao.statusProposicao">{{proposicao.statusProposicao.descricaoSituacao}}</p>
+    <h2>Ementa</h2>
+    <p>{{proposicao.ementa}}</p>
+
+    <h2>Última situação</h2>
+    <p *ngIf="proposicao.statusProposicao">{{proposicao.statusProposicao.descricaoSituacao}}</p>
+
+    <div *ngIf="autor">
+      <h2>Autoria</h2>
+      <p><img src="{{autor.urlFoto}}"></p>
+      <p>{{autor.nome}} - {{autor.siglaPartido}}/{{autor.siglaUf}}</p>
+    </div>
+
+    <h2>Palavras-chave</h2>
+    <p text-wrap>
+      <ion-badge *ngFor="let keyword of proposicao.keywords" style="margin: 1px" color="light">{{keyword}}</ion-badge>
+    </p>
+  </div>
+
   <h2>Temas</h2>
   <ul>
     <li *ngFor="let tema of proposicaoQuery.temas">{{tema.tema}}</li>
@@ -56,12 +71,8 @@
     <ion-badge *ngFor="let comissao of proposicaoQuery.comissoes" style="margin: 1px" color="light">{{comissao.comissao}}</ion-badge>
   </p>
 
-  <h2>Palavras-chave</h2>
-  <p text-wrap>
-    <ion-badge *ngFor="let keyword of proposicao.keywords" style="margin: 1px" color="light">{{keyword}}</ion-badge>
-  </p>
-
-  <p text-center>
+  <h2>Proposição no site</h2>
+  <p text-center *ngIf="proposicao">
     <a ion-button align-self-center href="http://www.camara.gov.br/proposicoesWeb/fichadetramitacao?idProposicao={{proposicao.id}}">
       Ver Proposição &nbsp;
       <ion-icon ios="ios-open-outline" md="md-open" icon-right></ion-icon>

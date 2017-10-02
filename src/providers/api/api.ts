@@ -26,4 +26,8 @@ export class ApiProvider {
   public getProposicao(proposicaoIncompleta) {
     return this.http.get(proposicaoIncompleta.uri);
   }
+
+  public getAutores(proposicao) {
+    return this.http.get(proposicao.uriAutores);
+  }
 }

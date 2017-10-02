@@ -13,8 +13,9 @@ const cutoffMedia = 0.1;
   templateUrl: 'detail.html'
 })
 export class DetailPage {
-  proposicao: any = {};
   proposicaoQuery: any = {};
+  proposicao: any;
+  autor: any;
 
   constructor(
     public platform: Platform,
@@ -38,6 +39,16 @@ export class DetailPage {
             .subscribe(resp => {
               this.proposicao = resp.dados;
               this.proposicao.keywords = this.proposicao.keywords.split(',');
+              this.api
+                .getAutores(this.proposicao)
+                .map(res => res.json())
+                .subscribe(resAutores => {
+                  if (!resAutores.dados) {
+                    return;
+                  }
+                  const { nome, siglaPartido, siglaUf, urlFoto } = resAutores.dados.ultimoStatus;
+                  this.autor = { nome, siglaPartido, siglaUf, urlFoto };
+                });
             });
         }
       });
