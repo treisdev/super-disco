@@ -44,15 +44,17 @@
   <div *ngIf="proposicao">
 
     <h2>Ementa</h2>
-    <p>{{proposicao.ementa}}</p>
+    <p text-justify>{{proposicao.ementa}}</p>
 
-    <h2>Última situação</h2>
-    <p *ngIf="proposicao.statusProposicao">{{proposicao.statusProposicao.descricaoSituacao}}</p>
+    <div *ngIf="proposicao.statusProposicao">
+      <h2>Última situação</h2>
+      <p>{{proposicao.statusProposicao.descricaoSituacao}}</p>
+    </div>
 
     <div *ngIf="autor">
       <h2>Autoria</h2>
-      <p><img src="{{autor.urlFoto}}"></p>
-      <p>{{autor.nome}} - {{autor.siglaPartido}}/{{autor.siglaUf}}</p>
+      <p text-center><img src="{{autor.urlFoto}}"></p>
+      <p text-center>{{autor.nome}} - {{autor.siglaPartido}}/{{autor.siglaUf}}</p>
     </div>
 
     <h2>Palavras-chave</h2>
