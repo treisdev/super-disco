@@ -51,7 +51,7 @@
           {{proposicao.velocidade}} {{ proposicao.velocidade > 1 ? "tramitações recentes" : "tramitação recente" }}
         </p>
         <p>
-          <ion-badge *ngFor="let tema of proposicao.temas" style="margin: 1px" color="light">{{tema.tema}}</ion-badge>
+          <ion-badge *ngFor="let tema of proposicao.temas" style="margin: 1px" color="light" text-wrap>{{tema.tema}}</ion-badge>
         </p>
         <ion-avatar item-end>
           <svg width="32" height="32" viewBox="0 0 187 187">
