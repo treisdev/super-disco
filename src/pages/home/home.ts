@@ -92,8 +92,12 @@ export class HomePage {
   }
 
   public async filtrar() {
+    let origem = aprovometro;
+    if (this.ordenacao === 'favoritas') {
+      origem = await this.storage.get('favoritas');
+    }
     if (this.filtro) {
-      this.proposicoes = aprovometro.filter(
+      this.proposicoes = origem.filter(
         proposicao =>
           latinize(
             `${proposicao.siglaTipo} ${proposicao.numero}/${proposicao.ano} ${proposicao.temas
@@ -107,16 +111,13 @@ export class HomePage {
             .indexOf(latinize(this.filtro.toLowerCase())) > -1
       );
     } else {
-      this.proposicoes = aprovometro;
+      this.proposicoes = origem;
     }
     if (this.ordenacao === 'hot') {
       this.proposicoes.sort(byHotDesc);
     }
     if (this.ordenacao === 'chance') {
       this.proposicoes.sort(byChanceDesc);
-    }
-    if (this.ordenacao === 'favoritas') {
-      this.proposicoes = await this.storage.get('favoritas');
     }
     this.items = this.proposicoes.slice(0, 30);
   }
