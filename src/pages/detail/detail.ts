@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { ApiProvider } from '../../providers/api/api';
 
@@ -16,17 +17,19 @@ export class DetailPage {
   proposicaoQuery: any = {};
   proposicao: any;
   autor: any;
+  favorita: boolean;
 
   constructor(
     public platform: Platform,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public api: ApiProvider
+    public api: ApiProvider,
+    private storage: Storage
   ) {
     this.proposicaoQuery = navParams.get('proposicao');
   }
 
-  ionViewDidLoad() {
+  async ionViewWillEnter() {
     this.api
       .searchProposicao(this.proposicaoQuery)
       .map(res => res.json())
@@ -53,6 +56,20 @@ export class DetailPage {
         }
       });
     this.initSvg();
+    const favoritas = await this.storage.get('favoritas');
+    this.favorita =
+      favoritas.findIndex(proposicao => {
+        if (proposicao.siglaTipo != this.proposicaoQuery.siglaTipo) {
+          return false;
+        }
+        if (proposicao.numero != this.proposicaoQuery.numero) {
+          return false;
+        }
+        if (proposicao.ano != this.proposicaoQuery.ano) {
+          return false;
+        }
+        return true;
+      }) > -1;
   }
 
   initSvg() {
@@ -170,5 +187,34 @@ export class DetailPage {
     if (chance > cutoffAlta) return 'chancealta';
     if (chance > cutoffMedia) return 'chancemedia';
     return 'chancebaixa';
+  }
+
+  public async favoritar() {
+    this.favorita = true;
+    const favoritas = await this.storage.get('favoritas');
+    if (!favoritas) {
+      await this.storage.set('favoritas', Array.from(this.proposicaoQuery));
+      return;
+    }
+    favoritas.push(this.proposicaoQuery);
+    await this.storage.set('favoritas', favoritas);
+  }
+
+  public async desfavoritar() {
+    this.favorita = false;
+    const favoritas = await this.storage.get('favoritas');
+    const favoritasSemAtual = favoritas.filter(proposicao => {
+      if (proposicao.siglaTipo != this.proposicaoQuery.siglaTipo) {
+        return true;
+      }
+      if (proposicao.numero != this.proposicaoQuery.numero) {
+        return true;
+      }
+      if (proposicao.ano != this.proposicaoQuery.ano) {
+        return true;
+      }
+      return false;
+    });
+    await this.storage.set('favoritas', favoritasSemAtual);
   }
 }

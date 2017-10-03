@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -13,7 +14,12 @@ import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
   declarations: [MyApp, HomePage, DetailPage, AboutPage],
-  imports: [BrowserModule, IonicModule.forRoot(MyApp, { backButtonText: 'Voltar' }), HttpModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp, { backButtonText: 'Voltar' }),
+    IonicStorageModule.forRoot(),
+    HttpModule
+  ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, HomePage, DetailPage, AboutPage],
   providers: [StatusBar, SplashScreen, { provide: ErrorHandler, useClass: IonicErrorHandler }, ApiProvider]

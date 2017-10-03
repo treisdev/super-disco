@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import * as latinize from 'latinize';
 
 import { DetailPage } from '../detail/detail';
@@ -55,7 +56,7 @@ export class HomePage {
 
   aboutPage: any;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage) {
     this.proposicoes = aprovometro.slice();
     this.ordenacao = 'chance';
     for (let i = 0; i < 30; i++) {
@@ -64,6 +65,10 @@ export class HomePage {
       }
     }
     this.aboutPage = AboutPage;
+  }
+
+  ionViewWillEnter() {
+    this.filtrar();
   }
 
   doInfinite(infiniteScroll) {
@@ -86,7 +91,7 @@ export class HomePage {
     this.navCtrl.push(DetailPage, { proposicao });
   }
 
-  public filtrar() {
+  public async filtrar() {
     if (this.filtro) {
       this.proposicoes = aprovometro.filter(
         proposicao =>
@@ -101,21 +106,19 @@ export class HomePage {
             .toLowerCase()
             .indexOf(latinize(this.filtro.toLowerCase())) > -1
       );
-      if (this.ordenacao != 'chance') {
-        this.proposicoes.sort(byHotDesc);
-      } else {
-        this.proposicoes.sort(byChanceDesc);
-      }
-      this.items = this.proposicoes.slice(0, 30);
     } else {
       this.proposicoes = aprovometro;
-      if (this.ordenacao != 'chance') {
-        this.proposicoes.sort(byHotDesc);
-      } else {
-        this.proposicoes.sort(byChanceDesc);
-      }
-      this.items = this.proposicoes.slice(0, 30);
     }
+    if (this.ordenacao === 'hot') {
+      this.proposicoes.sort(byHotDesc);
+    }
+    if (this.ordenacao === 'chance') {
+      this.proposicoes.sort(byChanceDesc);
+    }
+    if (this.ordenacao === 'favoritas') {
+      this.proposicoes = await this.storage.get('favoritas');
+    }
+    this.items = this.proposicoes.slice(0, 30);
   }
 
   public colorByTipo(sigla) {

@@ -19,6 +19,18 @@
 
 
 <ion-content padding>
+  <ion-row text-center>
+    <ion-col class="favoritar">
+      <button ion-button icon-left align-self-center full *ngIf="!favorita" (click)="favoritar()">
+        <ion-icon name="star-outline"></ion-icon>
+        Adicionar a favoritos
+      </button>
+      <button ion-button icon-left align-self-center full *ngIf="favorita" (click)="desfavoritar()">
+        <ion-icon name="star"></ion-icon>
+        Remover de favoritos
+      </button>
+    </ion-col>
+  </ion-row>
   <ion-row text-center class="chance">
     <ion-col class="{{chanceToClass(proposicaoQuery.chance)}}">
       <strong class="chance-title">{{chanceToText(proposicaoQuery.chance)}}</strong><br>
