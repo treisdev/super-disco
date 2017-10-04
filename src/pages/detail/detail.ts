@@ -57,7 +57,9 @@ export class DetailPage {
       });
     this.initSvg();
     const favoritas = await this.storage.get('favoritas');
+
     this.favorita =
+      favoritas != null &&
       favoritas.findIndex(proposicao => {
         if (proposicao.siglaTipo != this.proposicaoQuery.siglaTipo) {
           return false;
