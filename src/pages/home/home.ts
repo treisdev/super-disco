@@ -111,7 +111,7 @@ export class HomePage {
             .indexOf(latinize(this.filtro.toLowerCase())) > -1
       );
     } else {
-      this.proposicoes = origem;
+      this.proposicoes = origem || [];
     }
     if (this.ordenacao === 'hot') {
       this.proposicoes.sort(byHotDesc);
