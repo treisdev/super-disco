@@ -193,11 +193,7 @@ export class DetailPage {
 
   public async favoritar() {
     this.favorita = true;
-    const favoritas = await this.storage.get('favoritas');
-    if (!favoritas) {
-      await this.storage.set('favoritas', Array.from(this.proposicaoQuery));
-      return;
-    }
+    let favoritas = await this.storage.get('favoritas') || [];
     favoritas.push(this.proposicaoQuery);
     await this.storage.set('favoritas', favoritas);
   }
