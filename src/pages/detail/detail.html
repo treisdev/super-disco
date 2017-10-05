@@ -61,6 +61,8 @@
     <div *ngIf="proposicao.statusProposicao">
       <h2>Última situação</h2>
       <p>{{proposicao.statusProposicao.descricaoSituacao}}</p>
+      <h2>Regime</h2>
+      <p>{{proposicao.statusProposicao.regime}}</p>
     </div>
 
     <div *ngIf="autor">
@@ -75,10 +77,10 @@
     </p>
   </div>
 
-  <h2>Temas</h2>
+  <!-- <h2>Temas</h2>
   <p text-wrap>
     <ion-badge *ngFor="let tema of proposicaoQuery.temas" style="margin: 1px" color="light" text-wrap>{{tema.tema}}</ion-badge>
-  </p>
+  </p> -->
 
   <h2>Comissões tramitadas</h2>
   <p text-wrap>
