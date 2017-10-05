@@ -52,6 +52,14 @@
       <span class="subtitle">Tramitações totais</span>
     </ion-col>
   </ion-row>
+  <ion-row text-center *ngIf="proposicao">
+    <ion-col>
+      <a button text-wrap ion-button icon-right align-self-center full href="http://www.camara.gov.br/proposicoesWeb/fichadetramitacao?idProposicao={{proposicao.id}}">
+        Ver proposição completa no site
+        <ion-icon ios="ios-open-outline" md="md-open"></ion-icon>
+      </a>
+    </ion-col>
+  </ion-row>
 
   <div *ngIf="proposicao">
 
@@ -69,6 +77,12 @@
       <h2>Autoria</h2>
       <p text-center><img src="{{autor.urlFoto}}"></p>
       <p text-center>{{autor.nome}} - {{autor.siglaPartido}}/{{autor.siglaUf}}</p>
+      <p text-center>
+        <a ion-button icon-right href="https://www.google.com/search?q={{autor.nome}}">
+          Buscar no Google
+          <ion-icon ios="ios-open-outline" md="md-open"></ion-icon>
+        </a>
+      </p>
     </div>
 
     <h2>Palavras-chave</h2>
@@ -86,14 +100,14 @@
   <p text-wrap>
     <ion-badge *ngFor="let comissao of proposicaoQuery.comissoes" style="margin: 1px" color="light" text-wrap>{{comissao.comissao}}</ion-badge>
   </p>
-
-  <h2>Proposição no site</h2>
+<!--
+  <h2>Proposição completa no site</h2>
   <p text-center *ngIf="proposicao">
     <a ion-button align-self-center href="http://www.camara.gov.br/proposicoesWeb/fichadetramitacao?idProposicao={{proposicao.id}}">
       Ver Proposição &nbsp;
       <ion-icon ios="ios-open-outline" md="md-open" icon-right></ion-icon>
     </a>
-  </p>
+  </p> -->
 
   <p text-wrap style="font-size: 0.85em;">*Período das tramitações recentes: 04/09 a 04/10/2017.</p>
   <p [hidden]="true">{{proposicao | json}}</p>
