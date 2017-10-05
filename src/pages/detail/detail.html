@@ -21,11 +21,11 @@
 <ion-content padding>
   <ion-row text-center>
     <ion-col class="favoritar">
-      <button ion-button icon-left align-self-center full *ngIf="!favorita" (click)="favoritar()">
+      <button ion-button icon-left align-self-center full *ngIf="!favorita" (click)="favoritar()" color="buttoncolor">
         <ion-icon name="star-outline"></ion-icon>
         Adicionar a favoritos
       </button>
-      <button ion-button icon-left align-self-center full *ngIf="favorita" (click)="desfavoritar()">
+      <button ion-button icon-left align-self-center full *ngIf="favorita" (click)="desfavoritar()" color="buttoncolor">
         <ion-icon name="star"></ion-icon>
         Remover de favoritos
       </button>
@@ -52,14 +52,6 @@
       <span class="subtitle">Tramitações totais</span>
     </ion-col>
   </ion-row>
-  <ion-row text-center *ngIf="proposicao">
-    <ion-col>
-      <a button text-wrap ion-button icon-right align-self-center full href="http://www.camara.gov.br/proposicoesWeb/fichadetramitacao?idProposicao={{proposicao.id}}">
-        Ver proposição completa no site
-        <ion-icon ios="ios-open-outline" md="md-open"></ion-icon>
-      </a>
-    </ion-col>
-  </ion-row>
 
   <div *ngIf="proposicao">
 
@@ -78,7 +70,7 @@
       <p text-center><img src="{{autor.urlFoto}}"></p>
       <p text-center>{{autor.nome}} - {{autor.siglaPartido}}/{{autor.siglaUf}}</p>
       <p text-center>
-        <a ion-button icon-right href="https://www.google.com/search?q={{autor.nome}}">
+        <a ion-button icon-right href="https://www.google.com/search?q={{autor.nome}}" color="buttoncolor">
           Buscar no Google
           <ion-icon ios="ios-open-outline" md="md-open"></ion-icon>
         </a>
@@ -100,14 +92,14 @@
   <p text-wrap>
     <ion-badge *ngFor="let comissao of proposicaoQuery.comissoes" style="margin: 1px" color="light" text-wrap>{{comissao.comissao}}</ion-badge>
   </p>
-<!--
-  <h2>Proposição completa no site</h2>
+
   <p text-center *ngIf="proposicao">
-    <a ion-button align-self-center href="http://www.camara.gov.br/proposicoesWeb/fichadetramitacao?idProposicao={{proposicao.id}}">
-      Ver Proposição &nbsp;
-      <ion-icon ios="ios-open-outline" md="md-open" icon-right></ion-icon>
+    <a button text-wrap ion-button icon-right align-self-center full href="http://www.camara.gov.br/proposicoesWeb/fichadetramitacao?idProposicao={{proposicao.id}}"
+      color="buttoncolor">
+      Ver proposição completa no site
+      <ion-icon ios="ios-open-outline" md="md-open"></ion-icon>
     </a>
-  </p> -->
+  </p>
 
   <p text-wrap style="font-size: 0.85em;">*Período das tramitações recentes: 04/09 a 04/10/2017.</p>
   <p [hidden]="true">{{proposicao | json}}</p>
