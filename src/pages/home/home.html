@@ -5,7 +5,7 @@
         <ion-icon name="information-circle"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-searchbar (ionInput)="filtrar()" [(ngModel)]="filtro" placeholder="Tema ou Proposição" debounce=400></ion-searchbar>
+    <ion-searchbar (ionInput)="filtrar()" [(ngModel)]="filtro" placeholder="Pesquisar..." debounce=400></ion-searchbar>
     <ion-buttons right>
       <button ion-button icon-only (click)="filtrar()">
         <ion-icon name="search"></ion-icon>
@@ -53,9 +53,9 @@
         <p text-wrap class="espacado">
           {{proposicao.velocidade}} {{ proposicao.velocidade > 1 ? "tramitações recentes" : "tramitação recente" }}
         </p>
-        <p>
+        <!-- <p>
           <ion-badge *ngFor="let tema of proposicao.temas" style="margin: 1px" color="light" text-wrap>{{tema.tema}}</ion-badge>
-        </p>
+        </p> -->
         <ion-avatar item-end>
           <svg width="32" height="32" viewBox="0 0 187 187">
               <polygon id="Polygon" [attr.fill]="colorByPercentage(proposicao.chance)"
