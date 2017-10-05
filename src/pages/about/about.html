@@ -21,20 +21,19 @@
     Augusto, Carlos Eduardo, Paulo Felipe e Saulo Guerra</p>
 
   <h2>Metodologia</h2>
-  <p>Para calcular essa chance aplicamos algoritmos de Machine Learning (XGBoost e mineração de texto) em todos os dados das
-    tramitações e dados das proposicões (comissões, tema, tempo e quantidade de tramitação, datas, ementa, etc).</p>
+  <p>Para calcular essa chance aplicamos algoritmos de Machine Learning (gradient boosting machine e mineração de texto) em todos os dados das
+    tramitações e dados das proposicões (comissões, tempo e quantidade de tramitação, datas, etc).</p>
   <p>Após montarmos uma base de treinamento com o histórico de proposições tramitadas, conseguimos chegar em uma aproximação
-    da probabilidade de uma proposta ser aprovada. Ou seja, transformada em norma jurídica, nos próximos seis meses.</p>
-  <p>Existe um enorme desbalanceamento nos dados em relação à quantidade de proposições que já se tornaram normas e as que foram
-    arquivadas ou vetadas, ou seja, pouquíssimas proposições de fato chegaram a virar lei dado o total de proposições existente.
-    Para resolver esse problema tivemos que utlizar técnias para dados desbalanceados (SMOTE)</p>
-  <p>Para validar o resultado de treinamento do modelo, utilizamos a métrica de precisão (precision) e sensibilidade (recall),
-    pois o resultado final do treinamento foi uma atribuição binária (verdadeiro ou falso) para cada proposição. A melhor
-    precisão obtida nos testes foi por volta de 34%, e a melhor sensibilidade por volta de 51%. Isso significa dizer que
-    a cada 100 proposições que o modelo previu que se tornariam normas 34 de fato se tornaram e a cada 100 proposições que
-    se tornaram normas, 51 o modelo previu corretamente. O resultado nos parece muito bom dado o enorme desbalanceamento
-    dos dados originais!</p>
-  <p>Para simplificar a interpretação (precisão e sensibilidade) transformamos esse resultado em 3 categorias textuais simples:
-    chance alta, chance média e chance baixa. Esses resultados finais foram incorporados no aplicativo juntamente com outros
-    detalhes da proposição.</p>
+    da probabilidade de uma proposta ser aprovada. Definimos como target uma variável binária que indica se uma proposta foi
+     transformada em norma jurídica nos seis meses posteriores à data base de análise.</p>
+  <p>Existe um enorme desbalanceamento nos dados em relação à quantidade de proposições que se tornam normas e o total de proposições que
+    estão tramitando, sendo necessário um tratamento adequado para essa característica dos dados. Optamos em utilizar um parâmetro
+     do algoritmo (LightGBM) em que os pesos das observações "raras" (aprovadas) são majorados, o que eleva o "custo" de erros. 
+  <p>Para validar o resultado de treinamento do modelo, utilizamos a métrica F1, que é uma média harmônica da precisão (precision) e 
+    da sensibilidade (recall). Na validação, a melhor precisão obtida foi de, aproximadamente, de 38%, e a melhor sensibilidade por volta de 30%. Isso significa dizer que
+    a cada 100 proposições que o modelo previu que se tornariam normas 38 de fato se tornaram e a cada 100 proposições que
+    se tornaram normas, 30 o modelo previu corretamente. Para um primeiro passo, o resultados são animadores.</p>
+  <p>Para simplificar a interpretação do usuário, transformamos esse resultado em 3 categorias textuais simples:
+    chance alta, chance média e chance baixa. Além disso, as proposições estão ordenadas conforme a probabilidade prevista pelo algoritmo.
+    Esses resultados finais foram incorporados ao aplicativo juntamente com outros detalhes da proposição.</p>
 </ion-content>
