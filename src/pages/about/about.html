@@ -18,29 +18,53 @@
     <img src="assets/img/logos/ppassf.png">
   </a>
   <h2>Aprovômetro versão {{version}}</h2>
-  <p>Aprovômetro é um aplicativo feito para participar do concurso Desafio App Legislativo 2017!</p>
-  <p>A ideia é apresentar a chance que as proposicões (PL, PEC e PLP) têm de virarem lei.</p>
-  <p>O aplicativo foi feito por um grupo de amigos apaixonados por dados e programação, composto por: Carlos Augusto, Carlos
-    Eduardo, Paulo Felipe e Saulo Guerra</p>
+  <p>Aprovômetro é um aplicativo feito para participar do concurso
+    <strong>Desafio App Legislativo 2017</strong>
+  </p>
+  <p>A ideia é apresentar a chance que as proposições (PL, PEC e PLP) têm de virar lei.</p>
+  <p>O aplicativo foi feito por um grupo de amigos apaixonados por dados e programação, composto por:</p>
+  <ul>
+    <li>
+      <a href="https://github.com/calimaborges">Carlos Augusto Borges</a>
+    </li>
+    <li>
+      <a href="https://github.com/xaxim">Carlos Eduardo Borges</a>
+    </li>
+    <li>
+      <a href="https://github.com/paulofelipe">Paulo Felipe</a>
+    </li>
+    <li>
+      <a href="https://github.com/sauloguerra">Saulo Guerra</a>
+    </li>
+  </ul>
 
   <h2>Metodologia</h2>
-  <p>Para calcular essa chance aplicamos algoritmos de Machine Learning (gradient boosting machine e mineração de texto) em
-    todos os dados das tramitações e dados das proposicões (comissões, tempo e quantidade de tramitação, datas, etc).</p>
+  <p>Para calcular essa chance aplicamos algoritmos de
+    <i>Machine Learning</i>
+    <i>(gradient boosting machine</i> e mineração de texto) em todos os dados das tramitações e dados das proposições (comissões,
+    tempo e quantidade de tramitação, datas, etc).</p>
   <p>Após montarmos uma base de treinamento com o histórico de proposições tramitadas, conseguimos chegar em uma aproximação
-    da probabilidade de uma proposta ser aprovada. Definimos como target uma variável binária que indica se uma proposta
-    foi transformada em norma jurídica nos seis meses posteriores à data base de análise.</p>
+    da probabilidade de uma proposta ser aprovada. Definimos como
+    <i>target</i> uma variável binária que indica se uma proposta foi transformada em norma jurídica nos seis meses posteriores
+    à data base de análise.</p>
   <p>Existe um enorme desbalanceamento nos dados em relação à quantidade de proposições que se tornam normas e o total de proposições
     que estão tramitando, sendo necessário um tratamento adequado para essa característica dos dados. Optamos em utilizar
-    um parâmetro do algoritmo (LightGBM) em que os pesos das observações "raras" (aprovadas) são majorados, o que eleva o
-    "custo" de erros.
-    <p>Para validar o resultado de treinamento do modelo, utilizamos a métrica F1, que é uma média harmônica da precisão (precision)
-      e da sensibilidade (recall). Nos teste, a melhor precisão obtida foi de, aproximadamente, de 23%, e a melhor sensibilidade
-      por volta de 42%. Isso significa dizer que a cada 100 proposições que o modelo previu que se tornariam normas 23 de
-      fato se tornaram e a cada 100 proposições que se tornaram normas, 42 o modelo previu corretamente. Para um primeiro
-      passo, o resultados são animadores.</p>
-    <p>Para simplificar a interpretação do usuário, transformamos esse resultado em 3 categorias textuais simples: chance alta,
-      chance média e chance baixa. Além disso, as proposições estão ordenadas conforme a probabilidade prevista pelo algoritmo.
-      Esses resultados finais foram incorporados ao aplicativo juntamente com outros detalhes da proposição.</p>
+    um parâmetro do algoritmo
+    <i>(LightGBM)</i> em que os pesos das observações "raras" (aprovadas) são majorados, o que eleva o "custo" de erros.
+    <p>Para validar o resultado de treinamento do modelo, utilizamos a métrica F1, que é uma média harmônica da precisão
+      <i>(precision)</i> e da sensibilidade (
+      <i>recall</i>). Nos teste,
+      <strong>a melhor precisão obtida foi de, aproximadamente, 23%, e a melhor sensibilidade por volta de 42%</strong>. Isso significa
+      dizer que a cada 100 proposições que o modelo previu que se tornariam normas 23 de fato se tornaram e a cada 100 proposições
+      que se tornaram normas, 42 o modelo previu corretamente. Para um primeiro passo, o resultados são animadores.</p>
+    <p>Para simplificar a interpretação do usuário, transformamos esse resultado em 3 categorias textuais simples:
+      <strong>
+        <span style="background-color: #59ad43; color: #fff">chance alta</span>,
+        <span style="background-color: #f1c40f; color: #fff">chance média</span> e
+        <span style="background-color: #e74c3c; color: #fff">chance baixa
+        </span>
+      </strong>. Além disso, as proposições estão inicialmente ordenadas conforme a probabilidade prevista pelo algoritmo. Esses resultados
+      finais foram incorporados ao aplicativo juntamente com outros detalhes da proposição.</p>
 
     <h2>Tecnologias</h2>
     <ion-row text-center>
