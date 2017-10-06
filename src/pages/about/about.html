@@ -30,9 +30,9 @@
     estão tramitando, sendo necessário um tratamento adequado para essa característica dos dados. Optamos em utilizar um parâmetro
      do algoritmo (LightGBM) em que os pesos das observações "raras" (aprovadas) são majorados, o que eleva o "custo" de erros. 
   <p>Para validar o resultado de treinamento do modelo, utilizamos a métrica F1, que é uma média harmônica da precisão (precision) e 
-    da sensibilidade (recall). Na validação, a melhor precisão obtida foi de, aproximadamente, de 38%, e a melhor sensibilidade por volta de 30%. Isso significa dizer que
-    a cada 100 proposições que o modelo previu que se tornariam normas 38 de fato se tornaram e a cada 100 proposições que
-    se tornaram normas, 30 o modelo previu corretamente. Para um primeiro passo, o resultados são animadores.</p>
+    da sensibilidade (recall). Nos teste, a melhor precisão obtida foi de, aproximadamente, de 23%, e a melhor sensibilidade por volta de 42%. Isso significa dizer que
+    a cada 100 proposições que o modelo previu que se tornariam normas 23 de fato se tornaram e a cada 100 proposições que
+    se tornaram normas, 42 o modelo previu corretamente. Para um primeiro passo, o resultados são animadores.</p>
   <p>Para simplificar a interpretação do usuário, transformamos esse resultado em 3 categorias textuais simples:
     chance alta, chance média e chance baixa. Além disso, as proposições estão ordenadas conforme a probabilidade prevista pelo algoritmo.
     Esses resultados finais foram incorporados ao aplicativo juntamente com outros detalhes da proposição.</p>
