@@ -10,7 +10,7 @@ const aprovometro = require('../../resources/aprovometro.json');
 
 const cutoffAlta = 0.5;
 const cutoffMedia = 0.1;
-const FAKE_LOADING_TIME: number = 50;
+const INITIAL_LOAD: number = 30;
 
 const byHotDesc = (a: any, b: any): number => {
   if (a.velocidade < b.velocidade) {
@@ -59,7 +59,7 @@ export class HomePage {
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage) {
     this.proposicoes = aprovometro.slice();
     this.ordenacao = 'chance';
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < INITIAL_LOAD; i++) {
       if (this.items.length < this.proposicoes.length) {
         this.items.push(this.proposicoes[this.items.length]);
       }
@@ -77,14 +77,12 @@ export class HomePage {
       return;
     }
 
-    setTimeout(() => {
-      for (let i = 0; i < 30; i++) {
-        if (this.items.length < this.proposicoes.length) {
-          this.items.push(this.proposicoes[this.items.length]);
-        }
+    for (let i = 0; i < INITIAL_LOAD; i++) {
+      if (this.items.length < this.proposicoes.length) {
+        this.items.push(this.proposicoes[this.items.length]);
       }
-      infiniteScroll.complete();
-    }, FAKE_LOADING_TIME);
+    }
+    infiniteScroll.complete();
   }
 
   public onClickProposicao(proposicao) {
