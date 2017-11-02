@@ -11,6 +11,8 @@ import { HomePage } from '../pages/home/home';
 import { DetailPage } from '../pages/detail/detail';
 import { AboutPage } from '../pages/about/about';
 import { ApiProvider } from '../providers/api/api';
+import { AprovometroProvider } from '../providers/aprovometro/aprovometro';
+import { AppVersion } from '@ionic-native/app-version';
 
 @NgModule({
   declarations: [MyApp, HomePage, DetailPage, AboutPage],
@@ -22,6 +24,13 @@ import { ApiProvider } from '../providers/api/api';
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, HomePage, DetailPage, AboutPage],
-  providers: [StatusBar, SplashScreen, { provide: ErrorHandler, useClass: IonicErrorHandler }, ApiProvider]
+  providers: [
+    StatusBar,
+    SplashScreen,
+    AppVersion,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    ApiProvider,
+    AprovometroProvider
+  ]
 })
 export class AppModule {}

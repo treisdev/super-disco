@@ -6,7 +6,7 @@ import * as latinize from 'latinize';
 import { DetailPage } from '../detail/detail';
 import { AboutPage } from '../about/about';
 
-const aprovometro = require('../../resources/aprovometro.json');
+import { AprovometroProvider } from '../../providers/aprovometro/aprovometro';
 
 const cutoffAlta = 0.5;
 const cutoffMedia = 0.1;
@@ -49,6 +49,7 @@ const byChanceDesc = (a: any, b: any): number => {
   templateUrl: 'home.html'
 })
 export class HomePage {
+  rawData: Array<any> = [];
   proposicoes: Array<any> = [];
   items: Array<any> = [];
   filtro: string = '';
@@ -56,15 +57,23 @@ export class HomePage {
 
   aboutPage: any;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage) {
-    this.proposicoes = aprovometro.slice();
-    this.ordenacao = 'chance';
-    for (let i = 0; i < INITIAL_LOAD; i++) {
-      if (this.items.length < this.proposicoes.length) {
-        this.items.push(this.proposicoes[this.items.length]);
-      }
-    }
+  constructor(
+    public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
+    private storage: Storage,
+    public aprovometro: AprovometroProvider
+  ) {
     this.aboutPage = AboutPage;
+    this.aprovometro.getData().subscribe(data => {
+      this.rawData = data;
+      this.proposicoes = this.rawData;
+      this.ordenacao = 'chance';
+      for (let i = 0; i < INITIAL_LOAD; i++) {
+        if (this.items.length < this.proposicoes.length) {
+          this.items.push(this.proposicoes[this.items.length]);
+        }
+      }
+    });
   }
 
   ionViewWillEnter() {
@@ -90,7 +99,7 @@ export class HomePage {
   }
 
   public async filtrar() {
-    let origem = aprovometro;
+    let origem = this.rawData;
     if (this.ordenacao === 'favoritas') {
       origem = await this.storage.get('favoritas');
     }
