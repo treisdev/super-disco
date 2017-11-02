@@ -14,7 +14,7 @@ export class AboutPage {
     try {
       this.version = await this.appVersion.getVersionNumber();
     } catch (error) {
-      this.version = '0.0.6';
+      this.version = '0.0.6.dev';
     }
   }
 }
