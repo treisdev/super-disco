@@ -1,4 +1,16 @@
 # Aprovometro
+* [Desafio Legislativo 2017](http://desafio.leg.br/desafios/app-legislativo/index.html)
+
+## Download
+* [App Store](https://itunes.apple.com/us/app/aprovometro/id1293617071)
+* [Google Play](https://play.google.com/store/apps/details?id=br.devall.aprovometro)
+
+## Autores
+* [Carlos Eduardo Borges](https://www.github.com/xaxim)
+* [Carlos Augusto Borges](https://www.github.com/calimaborges)
+* [Paulo Felipe](https://www.github.com/paulofelipe)
+* [Saulo Guerra](https://www.github.com/sauloguerra)
+
 
 # Pra rodar localmente ou com [DevApp](https://ionicframework.com/docs/pro/devapp/)
 ```bash
