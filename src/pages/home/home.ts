@@ -49,7 +49,6 @@ const byChanceDesc = (a: any, b: any): number => {
   templateUrl: 'home.html'
 })
 export class HomePage {
-  rawData: Array<any> = [];
   proposicoes: Array<any> = [];
   items: Array<any> = [];
   filtro: string = '';
@@ -64,9 +63,8 @@ export class HomePage {
     public aprovometro: AprovometroProvider
   ) {
     this.aboutPage = AboutPage;
-    this.aprovometro.getData().subscribe(data => {
-      this.rawData = data;
-      this.proposicoes = this.rawData;
+    this.aprovometro.getOfflineData().subscribe(data => {
+      this.proposicoes = data;
       this.ordenacao = 'chance';
       for (let i = 0; i < INITIAL_LOAD; i++) {
         if (this.items.length < this.proposicoes.length) {
@@ -99,7 +97,7 @@ export class HomePage {
   }
 
   public async filtrar() {
-    let origem = this.rawData;
+    let origem = this.aprovometro.dados || [];
     if (this.ordenacao === 'favoritas') {
       origem = await this.storage.get('favoritas');
     }
