@@ -49,7 +49,6 @@ const byChanceDesc = (a: any, b: any): number => {
   templateUrl: 'home.html'
 })
 export class HomePage {
-  proposicoes: Array<any> = [];
   items: Array<any> = [];
   filtro: string = '';
   ordenacao: string;
@@ -63,15 +62,7 @@ export class HomePage {
     public aprovometro: AprovometroProvider
   ) {
     this.aboutPage = AboutPage;
-    this.aprovometro.getOfflineData().subscribe(data => {
-      this.proposicoes = data;
-      this.ordenacao = 'chance';
-      for (let i = 0; i < INITIAL_LOAD; i++) {
-        if (this.items.length < this.proposicoes.length) {
-          this.items.push(this.proposicoes[this.items.length]);
-        }
-      }
-    });
+    this.ordenacao = 'chance';
   }
 
   ionViewWillEnter() {
@@ -79,14 +70,14 @@ export class HomePage {
   }
 
   doInfinite(infiniteScroll) {
-    if (this.items.length >= this.proposicoes.length) {
+    if (this.items.length >= this.aprovometro.proposicoes.length) {
       infiniteScroll.complete();
       return;
     }
 
     for (let i = 0; i < INITIAL_LOAD; i++) {
-      if (this.items.length < this.proposicoes.length) {
-        this.items.push(this.proposicoes[this.items.length]);
+      if (this.items.length < this.aprovometro.proposicoes.length) {
+        this.items.push(this.aprovometro.proposicoes[this.items.length]);
       }
     }
     infiniteScroll.complete();
@@ -97,12 +88,13 @@ export class HomePage {
   }
 
   public async filtrar() {
-    let origem = this.aprovometro.dados || [];
+    await this.aprovometro.carregaProposicoes();
+    let origem = this.aprovometro.proposicoes || [];
     if (this.ordenacao === 'favoritas') {
       origem = await this.storage.get('favoritas');
     }
     if (this.filtro) {
-      this.proposicoes = origem.filter(
+      this.aprovometro.proposicoes = origem.filter(
         proposicao =>
           latinize(
             `${proposicao.siglaTipo} ${proposicao.numero}/${proposicao.ano} ${proposicao.temas
@@ -116,15 +108,16 @@ export class HomePage {
             .indexOf(latinize(this.filtro.toLowerCase())) > -1
       );
     } else {
-      this.proposicoes = origem || [];
+      this.aprovometro.proposicoes = origem || [];
     }
     if (this.ordenacao === 'hot') {
-      this.proposicoes.sort(byHotDesc);
+      this.aprovometro.proposicoes.sort(byHotDesc);
     }
     if (this.ordenacao === 'chance') {
-      this.proposicoes.sort(byChanceDesc);
+      this.aprovometro.proposicoes.sort(byChanceDesc);
     }
-    this.items = this.proposicoes.slice(0, 30);
+    const maxItens = this.aprovometro.proposicoes.length >= 30 ? 30 : this.aprovometro.proposicoes.length;
+    this.items = this.aprovometro.proposicoes.slice(0, maxItens);
   }
 
   public colorByTipo(sigla) {
