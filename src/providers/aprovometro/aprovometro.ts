@@ -33,7 +33,6 @@ export class AprovometroProvider {
       this.possuiAtualizacao = false;
     } catch (error) {
       console.error(error);
-      this.possuiAtualizacao = true;
     }
     try {
       const datas = await this.http
@@ -54,9 +53,8 @@ export class AprovometroProvider {
     } catch (error) {
       console.error(error);
     }
-    this.verificaAtualizacao();
   }
-
+  
   async carregaDatas() {
     const datas = await this.storage.get(DATAS_KEY);
     if (datas === null) {
@@ -67,6 +65,7 @@ export class AprovometroProvider {
       this.dataInicial = datas.dataInicial;
       this.dataFinal = datas.dataFinal;
     }
+    this.verificaAtualizacao();
   }
 
   async verificaAtualizacao() {
