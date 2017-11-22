@@ -26,52 +26,52 @@
 </ion-header>
 
 <ion-content>
+  <ion-item *ngIf="aprovometro.possuiAtualizacao">
+    <strong text-wrap style="font-size: 0.85em;">Existem novos cálculos</strong>
+    <button ion-button item-end icon-left (click)="onClickAtualizar()">
+      <ion-icon name="cloud-download"></ion-icon>
+      Atualizar
+    </button>
+  </ion-item>
+  <ion-item *ngIf="!aprovometro.proposicoes">
+    <ion-spinner>Carregando...</ion-spinner>
+  </ion-item>
   <ion-item *ngIf="items.length === 0">
     <strong text-wrap style="font-size: 0.85em;">Nenhuma proposição encontrada.</strong>
   </ion-item>
   <ion-item *ngIf="filtro">
-    <strong text-wrap style="font-size: 0.85em;">{{ proposicoes.length }} Proposições filtradas por: {{ filtro }}</strong>
+    <strong text-wrap style="font-size: 0.85em;">{{ aprovometro.proposicoes.length }} Proposições filtradas por: {{ filtro }}</strong>
   </ion-item>
   <ion-list>
     <button ion-item *ngFor="let proposicao of items" (click)="onClickProposicao(proposicao)">
-        <ion-avatar item-start>
-            <svg height="50" width="50" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="40" [attr.fill]="colorByTipo(proposicao.siglaTipo)" />
-              <text font-family="LucidaGrande-Bold, Lucida Grande"
-                font-size="30" font-weight="bold"
-                text-anchor="middle"
-                alignment-baseline="middle"
-                fill="#ffffff"
-                x="50" y="52">
-                {{proposicao.siglaTipo}}
-              </text>
-            </svg>
-        </ion-avatar>
-        <h2>
-          {{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}
-        </h2>
-        <p text-wrap class="espacado">
-          {{proposicao.velocidade}} {{ proposicao.velocidade > 1 ? "tramitações recentes" : "tramitação recente" }}
-        </p>
-        <!-- <p>
+      <ion-avatar item-start>
+        <svg height="50" width="50" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" [attr.fill]="colorByTipo(proposicao.siglaTipo)" />
+          <text font-family="LucidaGrande-Bold, Lucida Grande" font-size="30" font-weight="bold" text-anchor="middle" alignment-baseline="middle"
+            fill="#ffffff" x="50" y="52">
+            {{proposicao.siglaTipo}}
+          </text>
+        </svg>
+      </ion-avatar>
+      <h2>
+        {{proposicao.siglaTipo}} {{proposicao.numero}}/{{proposicao.ano}}
+      </h2>
+      <p text-wrap class="espacado">
+        {{proposicao.velocidade}} {{ proposicao.velocidade > 1 ? "tramitações recentes" : "tramitação recente" }}
+      </p>
+      <!-- <p>
           <ion-badge *ngFor="let tema of proposicao.temas" style="margin: 1px" color="light" text-wrap>{{tema.tema}}</ion-badge>
         </p> -->
-        <ion-avatar item-end>
-          <svg width="32" height="32" viewBox="0 0 187 187">
-              <polygon id="Polygon" [attr.fill]="colorByPercentage(proposicao.chance)"
-                       points="93.0762609 5 170.152522 49.5 170.152522 138.5 93.0762609 183 16 138.5 16 49.5"></polygon>
-              <text id="badge-chance-text"
-                font-family="LucidaGrande-Bold, Lucida Grande"
-                font-size="45" font-weight="bold"
-                letter-spacing="-4.5"
-                text-anchor="middle"
-                fill="#ffffff"
-                x="95" y="110">
-                {{this.chanceToText(proposicao.chance)}}
-              </text>
-          </svg>
-        </ion-avatar>
-      </button>
+      <ion-avatar item-end>
+        <svg width="32" height="32" viewBox="0 0 187 187">
+          <polygon id="Polygon" [attr.fill]="colorByPercentage(proposicao.chance)" points="93.0762609 5 170.152522 49.5 170.152522 138.5 93.0762609 183 16 138.5 16 49.5"></polygon>
+          <text id="badge-chance-text" font-family="LucidaGrande-Bold, Lucida Grande" font-size="45" font-weight="bold" letter-spacing="-4.5"
+            text-anchor="middle" fill="#ffffff" x="95" y="110">
+            {{this.chanceToText(proposicao.chance)}}
+          </text>
+        </svg>
+      </ion-avatar>
+    </button>
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

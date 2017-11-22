@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { ApiProvider } from '../../providers/api/api';
 
 import * as d3 from 'd3';
+import { AprovometroProvider } from '../../providers/aprovometro/aprovometro';
 
 const cutoffAlta = 0.5;
 const cutoffMedia = 0.1;
@@ -24,7 +25,8 @@ export class DetailPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public api: ApiProvider,
-    private storage: Storage
+    private storage: Storage,
+    public aprovometro: AprovometroProvider
   ) {
     this.proposicaoQuery = navParams.get('proposicao');
   }
@@ -33,28 +35,37 @@ export class DetailPage {
     this.api
       .searchProposicao(this.proposicaoQuery)
       .map(res => res.json())
-      .subscribe(resultadoBusca => {
-        const { dados } = resultadoBusca;
-        if (dados.length == 1) {
-          this.api
-            .getProposicao(dados[0])
-            .map(res => res.json())
-            .subscribe(resp => {
-              this.proposicao = resp.dados;
-              this.proposicao.keywords = this.proposicao.keywords.split(',');
-              this.api
-                .getAutores(this.proposicao)
-                .map(res => res.json())
-                .subscribe(resAutores => {
-                  if (!resAutores.dados) {
-                    return;
-                  }
-                  const { nome, siglaPartido, siglaUf, urlFoto } = resAutores.dados.ultimoStatus;
-                  this.autor = { nome, siglaPartido, siglaUf, urlFoto };
-                });
-            });
-        }
-      });
+      .subscribe(
+        resultadoBusca => {
+          const { dados } = resultadoBusca;
+          if (dados.length == 1) {
+            this.api
+              .getProposicao(dados[0])
+              .map(res => res.json())
+              .subscribe(
+                resp => {
+                  this.proposicao = resp.dados;
+                  this.proposicao.keywords = this.proposicao.keywords.split(',');
+                  this.api
+                    .getAutores(this.proposicao)
+                    .map(res => res.json())
+                    .subscribe(
+                      resAutores => {
+                        if (!resAutores.dados) {
+                          return;
+                        }
+                        const { nome, siglaPartido, siglaUf, urlFoto } = resAutores.dados.ultimoStatus;
+                        this.autor = { nome, siglaPartido, siglaUf, urlFoto };
+                      },
+                      error => console.error(error)
+                    );
+                },
+                error => console.error(error)
+              );
+          }
+        },
+        error => console.error(error)
+      );
     this.initSvg();
     const favoritas = await this.storage.get('favoritas');
 
@@ -193,7 +204,7 @@ export class DetailPage {
 
   public async favoritar() {
     this.favorita = true;
-    let favoritas = await this.storage.get('favoritas') || [];
+    let favoritas = (await this.storage.get('favoritas')) || [];
     favoritas.push(this.proposicaoQuery);
     await this.storage.set('favoritas', favoritas);
   }
