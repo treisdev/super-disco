@@ -12,13 +12,40 @@ const PROPOSICOES_URL: string =
 
 @Injectable()
 export class AprovometroProvider {
-  public proposicoes: Array<any> = [];
+  public todasProposicoes: Array<any>;
+  public proposicoes: Array<any>;
   public dataInicial: string;
   public dataFinal: string;
   public possuiAtualizacao: boolean;
 
   constructor(public http: Http, private storage: Storage) {
     this.carregaDadosStorage();
+  }
+
+  public async atualizaDados() {
+    try {
+      this.proposicoes =
+        (await this.http
+          .get(PROPOSICOES_URL)
+          .map(res => res.json())
+          .toPromise()) || [];
+      await this.storage.set(PROPOSICOES_KEY, this.proposicoes);
+      this.possuiAtualizacao = false;
+    } catch (error) {
+      console.error(error);
+      this.possuiAtualizacao = true;
+    }
+    try {
+      const datas = await this.http
+        .get(DATAS_URL)
+        .map(res => res.json())
+        .toPromise();
+      this.dataInicial = datas.dataInicial;
+      this.dataFinal = datas.dataFinal;
+      await this.storage.set(DATAS_KEY, datas);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   public async carregaDadosStorage() {
@@ -40,19 +67,34 @@ export class AprovometroProvider {
       this.dataInicial = datas.dataInicial;
       this.dataFinal = datas.dataFinal;
     }
-    console.log(`Data final carregada: ${this.dataFinal}`);
+  }
+
+  async verificaAtualizacao() {
+    this.possuiAtualizacao = false;
+    try {
+      const data = await this.http
+        .get(DATAS_URL)
+        .map(res => res.json())
+        .toPromise();
+      if (this.dataFinal != data.dataFinal) {
+        this.possuiAtualizacao = true;
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   public async carregaProposicoes() {
-    this.proposicoes = await this.storage.get(PROPOSICOES_KEY);
-    if (this.proposicoes === null) {
-      this.proposicoes = (await this.getProposicoesOffline()) || [];
-      await this.storage.set(PROPOSICOES_KEY, this.proposicoes);
+    if (this.todasProposicoes) {
+      this.proposicoes = this.todasProposicoes.slice();
+      return;
     }
-    console.log(
-      `Quantidade de proposições carregadas: ${this.proposicoes.length}, primeira proposição:`,
-      this.proposicoes[0]
-    );
+    this.todasProposicoes = await this.storage.get(PROPOSICOES_KEY);
+    if (this.todasProposicoes === null) {
+      this.todasProposicoes = (await this.getProposicoesOffline()) || [];
+      await this.storage.set(PROPOSICOES_KEY, this.todasProposicoes);
+    }
+    this.proposicoes = this.todasProposicoes.slice();
   }
 
   getProposicoesOffline(): Promise<Array<any>> {
@@ -60,51 +102,5 @@ export class AprovometroProvider {
       .get('assets/aprovometro.json')
       .map(res => res.json())
       .toPromise();
-  }
-
-  async verificaAtualizacao() {
-    try {
-      const data = await this.http
-        .get(DATAS_URL)
-        .map(res => res.json())
-        .toPromise();
-
-      console.log(
-        `Verificou atualizações, últimas datas: ${data.dataInicial} a ${data.dataFinal}, atual: ${this.dataFinal}`
-      );
-      if (this.dataFinal != data.dataFinal) {
-        this.possuiAtualizacao = true;
-      } else {
-        this.possuiAtualizacao = false;
-      }
-    } catch (error) {
-      console.error(error);
-      this.possuiAtualizacao = false;
-    }
-  }
-
-  public async atualizaDados() {
-    console.log('Vai atualizar');
-    this.proposicoes = [];
-    try {
-      this.proposicoes =
-        (await this.http
-          .get(PROPOSICOES_URL)
-          .map(res => res.json())
-          .toPromise()) || [];
-      await this.storage.set(PROPOSICOES_KEY, this.proposicoes);
-      const datas = await this.http
-        .get(DATAS_URL)
-        .map(res => res.json())
-        .toPromise();
-      this.dataInicial = datas.dataInicial;
-      this.dataFinal = datas.dataFinal;
-      await this.storage.set(DATAS_KEY, datas);
-      this.possuiAtualizacao = false;
-      console.log('Atualizou');
-    } catch (error) {
-      console.error(error);
-      this.possuiAtualizacao = true;
-    }
   }
 }

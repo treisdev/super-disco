@@ -35,28 +35,37 @@ export class DetailPage {
     this.api
       .searchProposicao(this.proposicaoQuery)
       .map(res => res.json())
-      .subscribe(resultadoBusca => {
-        const { dados } = resultadoBusca;
-        if (dados.length == 1) {
-          this.api
-            .getProposicao(dados[0])
-            .map(res => res.json())
-            .subscribe(resp => {
-              this.proposicao = resp.dados;
-              this.proposicao.keywords = this.proposicao.keywords.split(',');
-              this.api
-                .getAutores(this.proposicao)
-                .map(res => res.json())
-                .subscribe(resAutores => {
-                  if (!resAutores.dados) {
-                    return;
-                  }
-                  const { nome, siglaPartido, siglaUf, urlFoto } = resAutores.dados.ultimoStatus;
-                  this.autor = { nome, siglaPartido, siglaUf, urlFoto };
-                });
-            });
-        }
-      });
+      .subscribe(
+        resultadoBusca => {
+          const { dados } = resultadoBusca;
+          if (dados.length == 1) {
+            this.api
+              .getProposicao(dados[0])
+              .map(res => res.json())
+              .subscribe(
+                resp => {
+                  this.proposicao = resp.dados;
+                  this.proposicao.keywords = this.proposicao.keywords.split(',');
+                  this.api
+                    .getAutores(this.proposicao)
+                    .map(res => res.json())
+                    .subscribe(
+                      resAutores => {
+                        if (!resAutores.dados) {
+                          return;
+                        }
+                        const { nome, siglaPartido, siglaUf, urlFoto } = resAutores.dados.ultimoStatus;
+                        this.autor = { nome, siglaPartido, siglaUf, urlFoto };
+                      },
+                      error => console.error(error)
+                    );
+                },
+                error => console.error(error)
+              );
+          }
+        },
+        error => console.error(error)
+      );
     this.initSvg();
     const favoritas = await this.storage.get('favoritas');
 

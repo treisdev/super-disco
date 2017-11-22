@@ -19,15 +19,24 @@ export class ApiProvider {
   constructor(public http: Http) {}
 
   public searchProposicao(proposicao) {
-    const url = `https://dadosabertos.camara.leg.br/api/v2/proposicoes?siglaTipo=${proposicao.siglaTipo}&numero=${proposicao.numero}&ano=${proposicao.ano}`;
+    const base = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes';
+    const parametros = `?siglaTipo=${proposicao.siglaTipo}&numero=${proposicao.numero}&ano=${proposicao.ano}`;
+    const periodo = '&dataInicio=2000-01-01&dataFim=2017-12-31';
+    const url = base + parametros + periodo;
     return this.http.get(url);
   }
 
   public getProposicao(proposicaoIncompleta) {
+    if (proposicaoIncompleta.uri === null) {
+      return this.http.get('assets/empty.json');
+    }
     return this.http.get(proposicaoIncompleta.uri);
   }
 
   public getAutores(proposicao) {
+    if (proposicao.uriAutores === null) {
+      return this.http.get('assets/person.png');
+    }
     return this.http.get(proposicao.uriAutores);
   }
 }

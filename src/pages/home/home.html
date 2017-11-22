@@ -27,8 +27,11 @@
 
 <ion-content>
   <ion-item *ngIf="aprovometro.possuiAtualizacao">
-    <strong text-wrap style="font-size: 0.85em;">Dados online carregados.</strong>
-    <button block (click)="aprovometro.atualizaDados()">Atualizar</button>
+    <strong text-wrap style="font-size: 0.85em;">Existem novos cálculos</strong>
+    <button ion-button item-end icon-left (click)="onClickAtualizar()">
+      <ion-icon name="cloud-download"></ion-icon>
+      Atualizar
+    </button>
   </ion-item>
   <ion-item *ngIf="!aprovometro.proposicoes">
     <ion-spinner>Carregando...</ion-spinner>

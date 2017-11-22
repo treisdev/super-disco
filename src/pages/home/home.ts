@@ -70,6 +70,10 @@ export class HomePage {
   }
 
   doInfinite(infiniteScroll) {
+    if(!this.aprovometro.proposicoes || this.aprovometro.proposicoes === null) {
+      infiniteScroll.complete();
+      return;
+    }
     if (this.items.length >= this.aprovometro.proposicoes.length) {
       infiniteScroll.complete();
       return;
@@ -85,6 +89,11 @@ export class HomePage {
 
   public onClickProposicao(proposicao) {
     this.navCtrl.push(DetailPage, { proposicao });
+  }
+
+  public async onClickAtualizar() {
+    await this.aprovometro.atualizaDados();
+    this.filtrar();
   }
 
   public async filtrar() {
