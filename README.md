@@ -1,5 +1,5 @@
 # Aprovometro
-* [Desafio Legislativo 2017](http://desafio.leg.br/desafios/app-legislativo/index.html)
+* [Desafio Legislativo 2017](https://desafio.leg.br/desafios/app-legislativo-2017-com-dados-abertos)
 
 ## Download
 * [App Store](https://itunes.apple.com/us/app/aprovometro/id1293617071)
